@@ -14,5 +14,6 @@ cd build/linux
 
 cmake ../.. # 编译release版本
 #cmake ../.. -DCMAKE_BUILD_TYPE=DEBUG # 编译debug版本
+make  -j 8
 
 strip -x -S libenet.a -o  libenet_.a
