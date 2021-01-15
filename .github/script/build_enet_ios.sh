@@ -1,6 +1,6 @@
 #!/bin/sh
 
-gpg --quiet -d --passphrase "$PROVISIONING_PASSWORD" --batch .github/script/CMakeLists.txt.asc > .github/script/CMakeLists.txt
+gpg --quiet -d --passphrase "$PROVISIONING_PASSWORD" --batch .github/file/CMakeLists.txt.asc > .github/file/CMakeLists.txt
 
 # 1.拉取eNet支持库
 git clone https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-p2p.git
@@ -14,20 +14,16 @@ mkdir -p build/ios
 
 cd build/ios
 
-#TODO makefile需加密
-cp ../../../../../.github/script/CMakeLists.txt   ../../CMakeLists.txt
-cp ../../../../app/app_p2p.h   ../../../../app/src/app_p2p.h
-cp ../../../qcloud-iot-explorer-sdk-embedded-c/include/config.h   ../../../../app/src/config.h
-cp ../../../qcloud-iot-explorer-sdk-embedded-c/include/lite-list.h   ../../../../app/src/lite-list.h
-cp ../../../qcloud-iot-explorer-sdk-embedded-c/include/lite-utils.h   ../../../../app/src/lite-utils.h
-cp ../../../qcloud-iot-explorer-sdk-embedded-c/include/platform.h   ../../../../app/src/platform.h
-cp ../../../qcloud-iot-explorer-sdk-embedded-c/include/qcloud_iot_import.h   ../../../../app/src/qcloud_iot_import.h
+cp ../../../../../.github/file/CMakeLists.txt   ../../CMakeLists.txt
+cp ../../../../../.github/file/libcurl.a        ../../../../app_interface/libcurl.a
 
-# mv config.h  lite-list.h  lite-utils.h  platform.h  qcloud_iot_import.h
+mv ../../../../app_interface/iot_inc/exports/*     ../../../../app_interface
+mv ../../../../app_interface/iot_inc/*     ../../../../app_interface
+mv ../../../../app_interface/curl_inc/*     ../../../../app_interface
 
-mv ../../../../app/ ../../../../components_src/eNet/extension/
+mv ../../../../app_interface/   ../../../../components_src/eNet/src/app_interface/
+
 cmake ../.. -GXcode -DCMAKE_INSTALL_PREFIX=$PWD/INSTALL -DENET_SELF_SIGN=ON -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_BUILD_TYPE=Debug -DENET_VERSION=v1.0.0 -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3
-
 
 
 # build lib
