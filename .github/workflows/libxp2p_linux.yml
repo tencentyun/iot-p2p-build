@@ -22,7 +22,7 @@ jobs:
       with:
         upload_url: ${{ github.event.release.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
         asset_path: iot-p2p/components_src/eNet/build/linux/libenet_.a
-        asset_name: libenet.a
+        asset_name: libenet_linux.a
         asset_content_type: application/zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
