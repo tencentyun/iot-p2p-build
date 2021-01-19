@@ -2,9 +2,12 @@
 
 # 1.拉取eNet支持库
 git clone https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-p2p.git
+cd iot-p2p
 
-cd iot-p2p/components_src/eNet
+rc=$(git rev-parse --short HEAD)
+echo $rc
 
+cd components_src/eNet
 
 
 # 2.编译Linux平台工程配置

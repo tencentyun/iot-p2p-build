@@ -2,11 +2,26 @@
 
 gpg --quiet -d --passphrase "$PROVISIONING_PASSWORD" --batch .github/file/CMakeLists.txt.asc > .github/file/CMakeLists.txt
 
+
+CURVERSION=$(git describe --tags `git rev-list --tags --max-count=1`)
+
 # 1.拉取eNet支持库
 git clone https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-p2p.git
+cd iot-p2p
 
-cd iot-p2p/components_src/eNet
+rc=$(git rev-parse --short HEAD)
+echo $rc
 
+if [ $1 == 'Release' ]; then
+    echo "Release"
+    # 更新版本，确定对应关系
+    git tag $CURVERSION
+    git push https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-p2p.git --tags
+else
+    echo "Debug"
+fi
+
+cd components_src/eNet
 
 
 # 2.编译iOS平台工程配置

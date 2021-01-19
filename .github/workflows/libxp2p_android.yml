@@ -1,0 +1,38 @@
+name: Android XP2P CI
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-18.04
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+#    - name: build libenet
+#      run: sh .github/script/build_enet_android.sh
+#      env:
+#        GIT_ACCESS_TOKEN: ${{ secrets.IOT_GITHUB_ACCESS_TOKEN }}
+#        PROVISIONING_PASSWORD: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
+#
+#    - name: Build with Gradle
+#      run: |
+#        cp -f .github/file/build.gradle iot-p2p/components_src/eNet/samples/android/xnet/
+#        cd iot-p2p/components_src/eNet/samples/android
+#        ./gradlew assemble
+#        ls xnet
+#        find . -name "libxnet-android.so"
+#        pwd
+        
+    - name: Upload NETSDK Library
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ github.event.release.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+#        asset_path: iot-p2p/components_src/eNet/samples/android/xnet/build/intermediates/cmake/debug/obj/armeabi-v7a/libxnet-android.so
+        asset_path: .github/file/libxnet-android.so
+        asset_name: libxp2p_android.so
+        asset_content_type: application/zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
