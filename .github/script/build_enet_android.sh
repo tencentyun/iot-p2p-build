@@ -2,7 +2,7 @@
 
 cmake --version
 
-gpg --quiet -d --passphrase "$PROVISIONING_PASSWORD" --batch .github/file/CMakeLists_android.txt.asc > .github/file/CMakeLists_android.txt
+# gpg --quiet -d --passphrase "$PROVISIONING_PASSWORD" --batch .github/file/CMakeLists_android.txt.asc > .github/file/CMakeLists_android.txt
 
 
 # 1.拉取eNet支持库
@@ -18,7 +18,19 @@ cd components_src/eNet/samples/android
 
 # 2.编译Linux平台工程配置
 rm -rf xnet/jni/*
-cp ../../../../../.github/file/CMakeLists_android.txt   xnet/CMakeLists.txt
+rm -rf xnet/src/main/java/com/tencent/xnet/*
+
+# 拷贝源文件
+cp ../../../../android/java/* xnet/src/main/java/com/tencent/xnet/
+cp ../../../../android/cpp/* xnet/jni
+
+# 拷贝构建脚本
+cp ../../../../android/build.gradle xnet/
+cp ../../../../android/CMakeLists.txt xnet/
+cp ../../../../android/AndroidManifest.xml xnet/src/main/
+
+
+# cp ../../../../../.github/file/CMakeLists_android.txt   xnet/CMakeLists.txt
 cp ../../../../../.github/file/libcurl_android.a            ../../../../app_interface/libcurl.a
 
 mv ../../../../app_interface/iot_inc/exports/*     ../../../../app_interface

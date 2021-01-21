@@ -2,6 +2,9 @@ name: Android XP2P CI
 
 on: [push, pull_request]
 
+env:
+  IOT_SONATYPE_USERNAME: ${{ secrets.IOT_SONATYPE_USERNAME }}
+  IOT_SONATYPE_PASSWORD: ${{ secrets.IOT_SONATYPE_PASSWORD }}
 
 jobs:
   build-and-deploy:
@@ -20,20 +23,19 @@ jobs:
       run: |
         echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;22.0.7026061"
         cmake_version=$(echo $(cmake --version) | perl -pe '($_)=/([0-9]+([.][0-9]+)+)/')
-        sed -i "s#x.x.x#$cmake_version#g" .github/file/build.gradle
-        cp -f .github/file/build.gradle iot-p2p/components_src/eNet/samples/android/xnet/
+        sed -i "s#x.x.x#$cmake_version#g" iot-p2p/components_src/eNet/samples/android/xnet/build.gradle
         cd iot-p2p/components_src/eNet/samples/android
         ./gradlew assemble
-        ls xnet
-        find . -name "libxnet-android.so"
-        pwd
+
+    - name: Publish aar to Maven
+      run: ./gradlew publish
         
-    - name: Upload NETSDK Library
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ github.event.release.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: iot-p2p/components_src/eNet/samples/android/xnet/build/intermediates/cmake/debug/obj/armeabi-v7a/libxnet-android.so
-        asset_name: libxp2p_android.so
-        asset_content_type: application/zip
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Upload NETSDK Library
+    #   uses: actions/upload-release-asset@v1
+    #   with:
+    #     upload_url: ${{ github.event.release.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+    #     asset_path: iot-p2p/components_src/eNet/samples/android/xnet/build/intermediates/cmake/debug/obj/armeabi-v7a/libxnet-android.so
+    #     asset_name: libxp2p_android.so
+    #     asset_content_type: application/zip
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
