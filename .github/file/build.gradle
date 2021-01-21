@@ -4,7 +4,6 @@ android {
     buildToolsVersion "28.0.3"
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
-    ndkVersion "major.minor.build"
     defaultConfig {
         applicationId "com.tencent.xnet"
         minSdkVersion 19
@@ -12,7 +11,7 @@ android {
 
         ndk {
             abiFilters 'armeabi-v7a'//, 'arm64-v8a', 'x86', 'x86_64'
-            // ndkVersion '22.0.7026061'
+            ndkVersion '22.0.7026061'
         }
         externalNativeBuild {
             cmake {
