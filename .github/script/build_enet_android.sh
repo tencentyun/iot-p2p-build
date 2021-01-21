@@ -17,6 +17,7 @@ cd components_src/eNet/samples/android
 
 
 # 2.编译Linux平台工程配置
+rm -rf xnet/jni/*
 cp ../../../../../.github/file/CMakeLists_android.txt   xnet/CMakeLists.txt
 cp ../../../../../.github/file/libcurl_android.a            ../../../../app_interface/libcurl.a
 
