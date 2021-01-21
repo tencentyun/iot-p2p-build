@@ -28,7 +28,9 @@ jobs:
         ./gradlew assemble
 
     - name: Publish aar to Maven
-      run: ./gradlew publish
+      run: |
+        cd iot-p2p/components_src/eNet/samples/android
+        ./gradlew publish
         
     # - name: Upload NETSDK Library
     #   uses: actions/upload-release-asset@v1
