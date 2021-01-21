@@ -19,7 +19,6 @@ jobs:
 
     - name: Build with Gradle
       run: |
-        echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;22.0.7026061"
         cp -f .github/file/build.gradle iot-p2p/components_src/eNet/samples/android/xnet/
         cd iot-p2p/components_src/eNet/samples/android
         ./gradlew assemble
