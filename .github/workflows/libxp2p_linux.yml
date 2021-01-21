@@ -1,8 +1,7 @@
 name: Linux XP2P CI
 
-on:
-  release:
-    types: [published]
+on: [push, pull_request]
+
 
 jobs:
   build-and-deploy:
