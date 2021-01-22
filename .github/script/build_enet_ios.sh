@@ -2,9 +2,10 @@
 
 gpg --quiet -d --passphrase "$PROVISIONING_PASSWORD" --batch .github/file/CMakeLists.txt.asc > .github/file/CMakeLists.txt
 
+git branch
 
 CURVERSION=$(git describe --tags `git rev-list --tags --max-count=1`)
-
+echo $CURVERSION
 # 1.拉取eNet支持库
 git clone https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-p2p.git
 cd iot-p2p
@@ -12,14 +13,33 @@ cd iot-p2p
 rc=$(git rev-parse --short HEAD)
 echo $rc
 
-if [ $1 == 'Release' ]; then
-    echo "Release"
-    # 更新版本，确定对应关系
-    git tag $CURVERSION
-    git push https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-p2p.git --tags
-else
-    echo "Debug"
-fi
+git config --global user.name "codefarmer"
+git config --global user.name "dev_tester@163.com"
+
+git config --list
+
+datetime=$(date '+%Y-%m-%d %H:%M:%S')
+echo $datetime >> readme.md
+
+echo $datetime
+
+git add .
+git commit -m "tencentyun/iot-p2p@$rc"
+echo ":wq" | git commit --amend --author='codefarmer <dev_tester@163.com>'
+
+echo "whhhhhhstart"
+git log -2
+echo "whhhhhhstend"
+
+
+#if [ $1 == 'Release' ]; then
+#    echo "Release"
+#    # 更新版本，确定对应关系
+#    git tag $CURVERSION
+#    git push https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-p2p.git --tags
+#else
+#    echo "Debug"
+#fi
 
 cd components_src/eNet
 
