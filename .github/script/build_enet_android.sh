@@ -34,8 +34,8 @@ cp ../../../../android/AndroidManifest.xml xnet/src/main/
 # cp ../../../../../.github/file/CMakeLists_android.txt   xnet/CMakeLists.txt
 cp ../../../../../.github/file/libcurl_android.a            ../../../../app_interface/libcurl.a
 
-mv ../../../../app_interface/iot_inc/exports/*     ../../../../app_interface
-mv ../../../../app_interface/iot_inc/*             ../../../../app_interface
+#mv ../../../../app_interface/iot_inc/exports/*     ../../../../app_interface
+#mv ../../../../app_interface/iot_inc/*             ../../../../app_interface
 mv ../../../../app_interface/curl_inc/*            ../../../../app_interface
 
 mv ../../../../app_interface/*        xnet/jni
