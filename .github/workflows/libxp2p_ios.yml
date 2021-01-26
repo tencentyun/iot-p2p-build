@@ -16,8 +16,7 @@ jobs:
 #        GIT_ACCESS_TOKEN: ${{ secrets.IOT_GITHUB_ACCESS_TOKEN }}
 #        PROVISIONING_PASSWORD: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
 
-    - if: "!github.event.release.prerelease"
-      name: build libenet
+    - name: build libenet
       run: |
         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
         export GIT_BRANCH_IMAGE_VERSION=$VERSION
@@ -27,29 +26,10 @@ jobs:
       env:
         GIT_ACCESS_TOKEN: ${{ secrets.IOT_GITHUB_ACCESS_TOKEN }}
         PROVISIONING_PASSWORD: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
-
-#    - name: Upload NETSDK Header
-#      uses: actions/upload-release-asset@v1
-#      with:
-#        upload_url: ${{ github.event.release.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-#        asset_path: iot-p2p/components_src/eNet/src/app_interface/appWrapper.h
-#        asset_name: AppWrapper.h
-#        asset_content_type: application/zip
-#      env:
-#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#
-#    - name: Upload NETSDK Library
-#      uses: actions/upload-release-asset@v1
-#      with:
-#        upload_url: ${{ github.event.release.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-#        asset_path: iot-p2p/components_src/eNet/build/ios/Release-iphoneos/libenet.a
-#        asset_name: libxp2p_ios.a
-#        asset_content_type: application/zip
-#      env:
-#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
 
     - name: Upload NETSDK Library
       uses: actions/upload-artifact@v2
       with:
-        name: libenet_linux.a
+        name: libenet_ios.a
         path: iot-p2p/components_src/eNet/build/ios/Release-iphoneos/libenet.a
