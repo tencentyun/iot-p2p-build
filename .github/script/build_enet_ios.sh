@@ -15,6 +15,8 @@ git clone https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-p2p.git
 cd iot-p2p
 
 git checkout $GIT_BRANCH_IMAGE_VERSION
+VIDEOSDKVERSION=$(git rev-parse --short HEAD)
+echo $VIDEOSDKVERSION
 
 
 cd components_src/eNet
@@ -49,6 +51,8 @@ git clone https://$GIT_ACCESS_TOKEN@github.com/tonychanchen/TIoTThridSDK.git
 cd TIoTThridSDK
 
 cp ../../../src/app_interface/appWrapper.h  TIoTThridSDK/XP2P-iOS/Classes/AppWrapper.h
+sed -i "" "s/static const char * VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = $VIDEOSDKVERSION/g" TIoTThridSDK/XP2P-iOS/Classes/AppWrapper.h
+
 cp ../Release-iphoneos/libenet.a  TIoTThridSDK/XP2P-iOS/libenet.a
 
 poddatetime=$(date '+%Y%m%d%H%M')
