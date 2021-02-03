@@ -62,5 +62,5 @@ git add .
 git commit -m "tencentyun/iot-p2p-build@$rc"
 git push https://$GIT_ACCESS_TOKEN@github.com/tonychanchen/TIoTThridSDK.git
 
-git tag "1.0.0-beta.$poddatetime"
+git tag "1.0.4-beta.$poddatetime"
 git push https://$GIT_ACCESS_TOKEN@github.com/tonychanchen/TIoTThridSDK.git --tags
