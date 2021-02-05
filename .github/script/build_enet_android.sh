@@ -40,6 +40,10 @@ mv ../../../../app_interface/curl_inc/*            ../../../../app_interface
 
 mv ../../../../app_interface/*        xnet/jni
 
+# 将需要暴露的.h文件移至assets目录，这样可以将.h文件打进aar
+mkdir xnet/src/main/assets
+cp xnet/jni/appWrapper.h xnet/src/main/assets
+
 # 3.gradlew 编译
 
 sudo apt-get update -y
