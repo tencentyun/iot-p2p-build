@@ -40,6 +40,9 @@ mv ../../../../app_interface/curl_inc/*            ../../../../app_interface
 
 mv ../../../../app_interface/*        xnet/jni
 
+# 更新p2p代码版本
+sed -i "s#.*VIDEOSDKVERSION.*#static const char * VIDEOSDKVERSION = \"$rc\";#g" xnet/jni/appWrapper.h
+
 # 将需要暴露的.h文件移至assets目录，这样可以将.h文件打进aar
 mkdir xnet/src/main/assets
 cp xnet/jni/appWrapper.h xnet/src/main/assets
