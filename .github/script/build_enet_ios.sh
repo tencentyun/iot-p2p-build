@@ -1,4 +1,6 @@
 #!/bin/sh
+#set -eo pipefail
+set -e
 
 rc=$(git rev-parse --short HEAD)
 echo $rc
