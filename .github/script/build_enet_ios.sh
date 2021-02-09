@@ -10,8 +10,8 @@ gpg --quiet -d --passphrase "$PROVISIONING_PASSWORD" --batch .github/file/CMakeL
 git branch
 echo $GIT_BRANCH_IMAGE_VERSION
 
-CURVERSION=$(git describe --tags `git rev-list --tags --max-count=1`)
-echo $CURVERSION
+#CURVERSION=$(git describe --tags `git rev-list --tags --max-count=1`) #获取tag
+#echo $CURVERSION
 # 1.拉取eNet支持库
 git clone https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-p2p.git
 cd iot-p2p
