@@ -27,13 +27,13 @@ jobs:
       run: |
         echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;22.0.7026061"
         cmake_version=$(echo $(cmake --version) | perl -pe '($_)=/([0-9]+([.][0-9]+)+)/')
-        sed -i "s#x.x.x#$cmake_version#g" iot-p2p/components_src/eNet/samples/android/xnet/build.gradle
-        cd iot-p2p/components_src/eNet/samples/android
+        sed -i "s#x.x.x#$cmake_version#g" iot-p2p/samples/android/xnet/build.gradle
+        cd iot-p2p/samples/android
         ./gradlew assemble
 
     - name: Publish aar to Maven
       run: |
-        cd iot-p2p/components_src/eNet/samples/android
+        cd iot-p2p/samples/android
         ./gradlew publish
         
     # - name: Upload NETSDK Library

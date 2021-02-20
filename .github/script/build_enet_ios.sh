@@ -21,19 +21,16 @@ VIDEOSDKVERSION=$(git rev-parse --short HEAD)
 echo $VIDEOSDKVERSION
 
 
-cd components_src/eNet
-
-
 # 2.编译iOS平台工程配置
 mkdir -p build/ios
 
 cd build/ios
 
-cp ../../../../../.github/file/CMakeLists.txt   ../../CMakeLists.txt
-cp ../../../../../.github/file/libcurl.a        ../../../../app_interface/libcurl.a
+cp ../../../.github/file/CMakeLists.txt   ../../CMakeLists.txt
+cp ../../../.github/file/libcurl.a        ../../app_interface/libcurl.a
 
-mv ../../../../app_interface/curl_inc/*     ../../../../app_interface
-mv ../../../../app_interface/   ../../../../components_src/eNet/src/app_interface/
+mv ../../app_interface/curl_inc/*     ../../app_interface
+mv ../../app_interface/   ../../src/app_interface/
 
 cmake ../.. -GXcode -DCMAKE_INSTALL_PREFIX=$PWD/INSTALL -DENET_SELF_SIGN=ON -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_BUILD_TYPE=Debug -DENET_VERSION=v1.0.0 -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3
 
@@ -52,7 +49,7 @@ xcodebuild build -project eNet.xcodeproj -scheme enet_static -configuration Rele
 git clone https://$GIT_ACCESS_TOKEN@github.com/tonychanchen/TIoTThridSDK.git
 cd TIoTThridSDK
 
-cp ../../../src/app_interface/appWrapper.h  TIoTThridSDK/XP2P-iOS/Classes/AppWrapper.h
+cp ../src/app_interface/appWrapper.h  TIoTThridSDK/XP2P-iOS/Classes/AppWrapper.h
 sed -i "" "s/.*VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = \"$VIDEOSDKVERSION\";/g" TIoTThridSDK/XP2P-iOS/Classes/AppWrapper.h
 
 cp ../Release-iphoneos/libenet.a  TIoTThridSDK/XP2P-iOS/libenet.a

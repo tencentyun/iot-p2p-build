@@ -1,8 +1,8 @@
 #!/bin/sh
-
+#set -eo pipefail
+set -e
 cmake --version
 
-# gpg --quiet -d --passphrase "$PROVISIONING_PASSWORD" --batch .github/file/CMakeLists_android.txt.asc > .github/file/CMakeLists_android.txt
 echo $GIT_BRANCH_IMAGE_VERSION
 
 # 1.拉取eNet支持库
@@ -13,8 +13,7 @@ git checkout $GIT_BRANCH_IMAGE_VERSION
 rc=$(git rev-parse --short HEAD)
 echo $rc
 
-cd components_src/eNet/samples/android
-
+cd samples/android
 
 
 # 2.编译Linux平台工程配置
@@ -22,23 +21,19 @@ rm -rf xnet/jni/*
 rm -rf xnet/src/main/java/com/tencent/xnet/*
 
 # 拷贝源文件
-cp ../../../../android/java/* xnet/src/main/java/com/tencent/xnet/
-cp ../../../../android/cpp/* xnet/jni
+cp ../android/java/* xnet/src/main/java/com/tencent/xnet/
+cp ../android/cpp/* xnet/jni
 
 # 拷贝构建脚本
-cp ../../../../android/build.gradle xnet/
-cp ../../../../android/CMakeLists.txt xnet/
-cp ../../../../android/AndroidManifest.xml xnet/src/main/
+cp ../android/build.gradle xnet/
+cp ../android/CMakeLists.txt xnet/
+cp ../android/AndroidManifest.xml xnet/src/main/
 
 
-# cp ../../../../../.github/file/CMakeLists_android.txt   xnet/CMakeLists.txt
-cp ../../../../../.github/file/libcurl_android.a            ../../../../app_interface/libcurl.a
+cp ../../../.github/file/libcurl_android.a            ../../app_interface/libcurl.a
 
-#mv ../../../../app_interface/iot_inc/exports/*     ../../../../app_interface
-#mv ../../../../app_interface/iot_inc/*             ../../../../app_interface
-mv ../../../../app_interface/curl_inc/*            ../../../../app_interface
-
-mv ../../../../app_interface/*        xnet/jni
+mv ../../app_interface/curl_inc/*            ../../app_interface
+mv ../../app_interface/*        xnet/jni
 
 # 更新p2p代码版本
 sed -i "s#.*VIDEOSDKVERSION.*#static const char * VIDEOSDKVERSION = \"$rc\";#g" xnet/jni/appWrapper.h

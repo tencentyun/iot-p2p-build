@@ -24,4 +24,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: libenet_ios.a
-        path: iot-p2p/components_src/eNet/build/ios/Release-iphoneos/libenet.a
+        path: iot-p2p/build/ios/Release-iphoneos/libenet.a
