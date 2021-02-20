@@ -3,7 +3,9 @@
 set -e
 
 rc=$(git rev-parse --short HEAD)
+rb=$(git rev-parse --abbrev-ref HEAD)
 echo $rc
+echo $rb
 
 gpg --quiet -d --passphrase "$PROVISIONING_PASSWORD" --batch .github/file/CMakeLists.txt.asc > .github/file/CMakeLists.txt
 
@@ -16,7 +18,7 @@ echo $GIT_BRANCH_IMAGE_VERSION
 git clone https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-p2p.git
 cd iot-p2p
 
-git checkout $GIT_BRANCH_IMAGE_VERSION
+git checkout $rb
 VIDEOSDKVERSION=$(git rev-parse --short HEAD)
 echo $VIDEOSDKVERSION
 
