@@ -23,13 +23,13 @@ rm -rf xnet/jni/*
 rm -rf xnet/src/main/java/com/tencent/xnet/*
 
 # 拷贝源文件
-cp ../android/java/* xnet/src/main/java/com/tencent/xnet/
-cp ../android/cpp/* xnet/jni
+cp ../../android/java/* xnet/src/main/java/com/tencent/xnet/
+cp ../../android/cpp/* xnet/jni
 
 # 拷贝构建脚本
-cp ../android/build.gradle xnet/
-cp ../android/CMakeLists.txt xnet/
-cp ../android/AndroidManifest.xml xnet/src/main/
+cp ../../android/build.gradle xnet/
+cp ../../android/CMakeLists.txt xnet/
+cp ../../android/AndroidManifest.xml xnet/src/main/
 
 
 cp ../../../.github/file/libcurl_android.a            ../../app_interface/libcurl.a
