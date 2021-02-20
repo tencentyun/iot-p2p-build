@@ -54,7 +54,7 @@ cd TIoTThridSDK
 cp ../../../src/app_interface/appWrapper.h  TIoTThridSDK/XP2P-iOS/Classes/AppWrapper.h
 sed -i "" "s/.*VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = \"$VIDEOSDKVERSION\";/g" TIoTThridSDK/XP2P-iOS/Classes/AppWrapper.h
 
-cp ../../../Release-iphoneos/libenet.a  TIoTThridSDK/XP2P-iOS/libenet.a
+cp ../Release-iphoneos/libenet.a TIoTThridSDK/XP2P-iOS/libenet.a
 
 poddatetime=$(date '+%Y%m%d%H%M')
 echo $poddatetime
