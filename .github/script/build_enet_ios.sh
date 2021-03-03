@@ -31,7 +31,17 @@ cd build/ios
 cp ../../../.github/file/CMakeLists.txt   ../../CMakeLists.txt
 cp ../../../.github/file/libcurl.a        ../../app_interface/libcurl.a
 
-mv ../../app_interface/curl_inc/*     ../../app_interface
+mv ../../app_interface/curl_inc/*      ../../app_interface
+mv ../../app_interface/app_p2p/*    ../../app_interface
+mv ../../app_interface/cloud_api/*   ../../app_interface
+mv ../../app_interface/utils/*           ../../app_interface
+
+rm -rf ../../app_interface/utils
+rm -rf ../../app_interface/cloud_api
+rm -rf ../../app_interface/app_p2p
+rm -rf ../../app_interface/curl_inc
+rm -rf ../../app_interface/readme.md
+
 mv ../../app_interface/   ../../src/app_interface/
 
 cmake ../.. -GXcode -DCMAKE_INSTALL_PREFIX=$PWD/INSTALL -DENET_SELF_SIGN=ON -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_BUILD_TYPE=Debug -DENET_VERSION=v1.0.0 -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3
