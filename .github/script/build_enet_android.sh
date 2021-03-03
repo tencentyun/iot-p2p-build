@@ -35,7 +35,10 @@ cp ../../android/AndroidManifest.xml xnet/src/main/
 cp ../../../.github/file/libcurl_android.a            ../../app_interface/libcurl.a
 
 mv ../../app_interface/curl_inc/*            ../../app_interface
-mv ../../app_interface/*        xnet/jni
+mv ../../app_interface/app_p2p/*          ../../app_interface
+mv ../../app_interface/cloud_api/*         ../../app_interface
+mv ../../app_interface/utils/*                 ../../app_interface
+mv ../../app_interface/!(readme.md|app_p2p|cloud_api|curl_inc|utils)        xnet/jni
 
 # 更新p2p代码版本
 sed -i "s#.*VIDEOSDKVERSION.*#static const char * VIDEOSDKVERSION = \"$rc\";#g" xnet/jni/appWrapper.h
