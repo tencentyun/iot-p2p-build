@@ -32,7 +32,7 @@ cp ../../android/CMakeLists.txt xnet/
 cp ../../android/AndroidManifest.xml xnet/src/main/
 
 
-cp ../../../.github/file/libcurl_android.a            ../../app_interface/libcurl.a
+cp -r ../../../.github/file/libs   xnet/jni
 
 mv ../../app_interface/curl_inc/*            ../../app_interface
 mv ../../app_interface/app_p2p/*          ../../app_interface
