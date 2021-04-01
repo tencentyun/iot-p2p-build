@@ -30,7 +30,7 @@ jobs:
         echo +++++$cmake_version
         sed -i "s#x.x.x#$cmake_version#g" iot-p2p/samples/android/xnet/build.gradle
         cd iot-p2p/samples/android
-        ./gradlew assemble --info
+        ./gradlew assemble --scan
 
     - name: Publish aar to Maven
       run: |
