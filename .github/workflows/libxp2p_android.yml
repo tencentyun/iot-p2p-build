@@ -26,7 +26,7 @@ jobs:
     - name: Build with Gradle
       run: |
         cmake_version=$(echo $(cmake --version) | perl -pe '($_)=/([0-9]+([.][0-9]+)+)/')
-        echo +++++$cmake_version
+        echo ++++$cmake_version
         sed -i "s#x.x.x#$cmake_version#g" iot-p2p/samples/android/xnet/build.gradle
         cd iot-p2p/samples/android
         ./gradlew assemble --stacktrace
