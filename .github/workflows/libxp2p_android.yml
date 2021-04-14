@@ -36,6 +36,11 @@ jobs:
         sed -i "s#x.x.x#$cmake_version#g" iot-p2p/samples/android/xnet/build.gradle
         cd iot-p2p/samples/android
         ./gradlew assemble --stacktrace
+    - name: Upload aar to Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: xp2p.aar
+        path: iot-p2p/samples/android/build/outputs/aar/*-release.aar
 
     - name: Publish aar to Maven
       run: |
