@@ -40,7 +40,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: xp2p.aar
-        path: iot-p2p/samples/android/build/outputs/aar/*-release.aar
+        path: iot-p2p/samples/android/xnet/build/outputs/aar/*-release.aar
 
     - name: Publish aar to Maven
       run: |
