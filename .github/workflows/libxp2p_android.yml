@@ -5,6 +5,9 @@ on: [push, pull_request]
 env:
   IOT_SONATYPE_USERNAME: ${{ secrets.IOT_SONATYPE_USERNAME }}
   IOT_SONATYPE_PASSWORD: ${{ secrets.IOT_SONATYPE_PASSWORD }}
+  GPG_DECRYPT_PASSPHRASE: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
+  IOT_GPG_KEYNAME: ${{ secrets.IOT_GPG_KEYNAME }}
+  IOT_GPG_PASSPHRASE: ${{ secrets.IOT_GPG_PASSPHRASE }}
 
 jobs:
   build-and-deploy:
@@ -28,12 +31,24 @@ jobs:
         cmake-version: '3.18.4'
     - name: Use cmake
       run: echo +++++$(cmake --version)
+    - name: Update Values of Signing
+      run: |
+        export KEY_ID_OF_SIGN=$IOT_GPG_KEYNAME
+        export PASSWORD_OF_SIGN=$IOT_GPG_PASSPHRASE
+        sh .github/script/updateValuesForSign.sh
+    - name: Update Values of Signing
+      run: |
+        export KEY_ID_OF_SIGN=$IOT_GPG_KEYNAME
+        export PASSWORD_OF_SIGN=$IOT_GPG_PASSPHRASE
+        sh .github/script/update_version_for_android.sh
     - name: Build with Gradle
       run: |
+        gpg -d --passphrase "$GPG_DECRYPT_PASSPHRASE" --batch --quiet .github/file/secring.gpg.asc > secring.gpg
         echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;22.0.7026061"
         cmake_version=$(echo $(cmake --version) | perl -pe '($_)=/([0-9]+([.][0-9]+)+)/')
         echo +++++$cmake_version
         sed -i "s#x.x.x#$cmake_version#g" iot-p2p/samples/android/xnet/build.gradle
+        sh .github/script/update_version_for_android.sh
         cd iot-p2p/samples/android
         ./gradlew assemble --stacktrace
     - name: Upload aar to Artifacts
@@ -46,13 +61,3 @@ jobs:
       run: |
         cd iot-p2p/samples/android
         ./gradlew publish
-        
-    # - name: Upload NETSDK Library
-    #   uses: actions/upload-release-asset@v1
-    #   with:
-    #     upload_url: ${{ github.event.release.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-    #     asset_path: iot-p2p/components_src/eNet/samples/android/xnet/build/intermediates/cmake/debug/obj/armeabi-v7a/libxnet-android.so
-    #     asset_name: libxp2p_android.so
-    #     asset_content_type: application/zip
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

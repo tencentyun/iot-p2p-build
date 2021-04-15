@@ -19,6 +19,7 @@ cd samples/android
 
 
 # 2.编译Linux平台工程配置
+cp ../../../.github/file/gradle.properties ./
 rm -rf xnet/jni/*
 rm -rf xnet/src/main/java/com/tencent/xnet/*
 
