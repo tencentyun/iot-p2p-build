@@ -35,11 +35,6 @@ jobs:
       run: |
         export KEY_ID_OF_SIGN=$IOT_GPG_KEYNAME
         export PASSWORD_OF_SIGN=$IOT_GPG_PASSPHRASE
-        sh .github/script/updateValuesForSign.sh
-    - name: Update Values of Signing
-      run: |
-        export KEY_ID_OF_SIGN=$IOT_GPG_KEYNAME
-        export PASSWORD_OF_SIGN=$IOT_GPG_PASSPHRASE
         sh .github/script/update_version_for_android.sh
     - name: Build with Gradle
       run: |
