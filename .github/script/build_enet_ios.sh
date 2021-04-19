@@ -56,6 +56,7 @@ xcodebuild build -project eNet.xcodeproj -scheme enet_static -configuration Rele
 
 # 检测C环境是否编译通过
 echo "CCCCCCCCCCCCCCC"
+mkdir -p ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS
 cp ../../src/app_interface/appWrapper.h  ../../../.github/file/xp2p_c_demo/xp2p_c_demo/AppWrapper.h
 cp Release-iphoneos/libenet.a  ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/libenet.a
 cp _deps/libevent-build/Release-iphoneos/libevent_*.a   ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/
