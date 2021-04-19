@@ -9,3 +9,8 @@ ExportOptions.plist
 Packaging.log
 build.sh
 iot-p2p/
+*.cpp
+*.hpp
+*.java
+*.h
+build_*.sh

@@ -1,0 +1,348 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F43A65B0262D6AB20020F435 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = F43A65A2262D6AB20020F435 /* main.c */; };
+		F43A65B1262D6AB20020F435 /* libenet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F43A65A4262D6AB20020F435 /* libenet.a */; };
+		F43A65B2262D6AB20020F435 /* libminizip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F43A65A5262D6AB20020F435 /* libminizip.a */; };
+		F43A65B3262D6AB20020F435 /* libevent_mbedtls.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F43A65A6262D6AB20020F435 /* libevent_mbedtls.a */; };
+		F43A65B4262D6AB20020F435 /* libevent_extra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F43A65A7262D6AB20020F435 /* libevent_extra.a */; };
+		F43A65B5262D6AB20020F435 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F43A65A8262D6AB20020F435 /* libevent_core.a */; };
+		F43A65B7262D6AB20020F435 /* libmbedcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F43A65AA262D6AB20020F435 /* libmbedcrypto.a */; };
+		F43A65B8262D6AB20020F435 /* libmbedx509.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F43A65AB262D6AB20020F435 /* libmbedx509.a */; };
+		F43A65B9262D6AB20020F435 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F43A65AC262D6AB20020F435 /* libcurl.a */; };
+		F43A65BA262D6AB20020F435 /* libmbedtls.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F43A65AD262D6AB20020F435 /* libmbedtls.a */; };
+		F43A65BB262D6AB20020F435 /* libevent_pthreads.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F43A65AE262D6AB20020F435 /* libevent_pthreads.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F43A6592262D6A750020F435 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		F43A6594262D6A750020F435 /* libxp2p_c_demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libxp2p_c_demo.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F43A65A2262D6AB20020F435 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		F43A65A4262D6AB20020F435 /* libenet.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libenet.a; sourceTree = "<group>"; };
+		F43A65A5262D6AB20020F435 /* libminizip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libminizip.a; sourceTree = "<group>"; };
+		F43A65A6262D6AB20020F435 /* libevent_mbedtls.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent_mbedtls.a; sourceTree = "<group>"; };
+		F43A65A7262D6AB20020F435 /* libevent_extra.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent_extra.a; sourceTree = "<group>"; };
+		F43A65A8262D6AB20020F435 /* libevent_core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent_core.a; sourceTree = "<group>"; };
+		F43A65AA262D6AB20020F435 /* libmbedcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmbedcrypto.a; sourceTree = "<group>"; };
+		F43A65AB262D6AB20020F435 /* libmbedx509.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmbedx509.a; sourceTree = "<group>"; };
+		F43A65AC262D6AB20020F435 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
+		F43A65AD262D6AB20020F435 /* libmbedtls.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmbedtls.a; sourceTree = "<group>"; };
+		F43A65AE262D6AB20020F435 /* libevent_pthreads.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent_pthreads.a; sourceTree = "<group>"; };
+		F43A65AF262D6AB20020F435 /* AppWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppWrapper.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F43A6591262D6A750020F435 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F43A65B3262D6AB20020F435 /* libevent_mbedtls.a in Frameworks */,
+				F43A65B8262D6AB20020F435 /* libmbedx509.a in Frameworks */,
+				F43A65B9262D6AB20020F435 /* libcurl.a in Frameworks */,
+				F43A65B2262D6AB20020F435 /* libminizip.a in Frameworks */,
+				F43A65BA262D6AB20020F435 /* libmbedtls.a in Frameworks */,
+				F43A65B1262D6AB20020F435 /* libenet.a in Frameworks */,
+				F43A65B7262D6AB20020F435 /* libmbedcrypto.a in Frameworks */,
+				F43A65B5262D6AB20020F435 /* libevent_core.a in Frameworks */,
+				F43A65B4262D6AB20020F435 /* libevent_extra.a in Frameworks */,
+				F43A65BB262D6AB20020F435 /* libevent_pthreads.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F43A658B262D6A750020F435 = {
+			isa = PBXGroup;
+			children = (
+				F43A6596262D6A750020F435 /* xp2p_c_demo */,
+				F43A6595262D6A750020F435 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F43A6595262D6A750020F435 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F43A6594262D6A750020F435 /* libxp2p_c_demo.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F43A6596262D6A750020F435 /* xp2p_c_demo */ = {
+			isa = PBXGroup;
+			children = (
+				F43A65AF262D6AB20020F435 /* AppWrapper.h */,
+				F43A65A2262D6AB20020F435 /* main.c */,
+				F43A65A3262D6AB20020F435 /* XP2P-iOS */,
+			);
+			path = xp2p_c_demo;
+			sourceTree = "<group>";
+		};
+		F43A65A3262D6AB20020F435 /* XP2P-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				F43A65A4262D6AB20020F435 /* libenet.a */,
+				F43A65A5262D6AB20020F435 /* libminizip.a */,
+				F43A65A6262D6AB20020F435 /* libevent_mbedtls.a */,
+				F43A65A7262D6AB20020F435 /* libevent_extra.a */,
+				F43A65A8262D6AB20020F435 /* libevent_core.a */,
+				F43A65AA262D6AB20020F435 /* libmbedcrypto.a */,
+				F43A65AB262D6AB20020F435 /* libmbedx509.a */,
+				F43A65AC262D6AB20020F435 /* libcurl.a */,
+				F43A65AD262D6AB20020F435 /* libmbedtls.a */,
+				F43A65AE262D6AB20020F435 /* libevent_pthreads.a */,
+			);
+			path = "XP2P-iOS";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F43A6593262D6A750020F435 /* xp2p_c_demo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F43A659D262D6A750020F435 /* Build configuration list for PBXNativeTarget "xp2p_c_demo" */;
+			buildPhases = (
+				F43A6590262D6A750020F435 /* Sources */,
+				F43A6591262D6A750020F435 /* Frameworks */,
+				F43A6592262D6A750020F435 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = xp2p_c_demo;
+			productName = xp2p_c_demo;
+			productReference = F43A6594262D6A750020F435 /* libxp2p_c_demo.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F43A658C262D6A750020F435 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1240;
+				TargetAttributes = {
+					F43A6593262D6A750020F435 = {
+						CreatedOnToolsVersion = 12.4;
+					};
+				};
+			};
+			buildConfigurationList = F43A658F262D6A750020F435 /* Build configuration list for PBXProject "xp2p_c_demo" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F43A658B262D6A750020F435;
+			productRefGroup = F43A6595262D6A750020F435 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F43A6593262D6A750020F435 /* xp2p_c_demo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F43A6590262D6A750020F435 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F43A65B0262D6AB20020F435 /* main.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F43A659B262D6A750020F435 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		F43A659C262D6A750020F435 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F43A659E262D6A750020F435 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 89W69LHLD3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/xp2p_c_demo/XP2P-iOS",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F43A659F262D6A750020F435 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 89W69LHLD3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/xp2p_c_demo/XP2P-iOS",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F43A658F262D6A750020F435 /* Build configuration list for PBXProject "xp2p_c_demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F43A659B262D6A750020F435 /* Debug */,
+				F43A659C262D6A750020F435 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F43A659D262D6A750020F435 /* Build configuration list for PBXNativeTarget "xp2p_c_demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F43A659E262D6A750020F435 /* Debug */,
+				F43A659F262D6A750020F435 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F43A658C262D6A750020F435 /* Project object */;
+}

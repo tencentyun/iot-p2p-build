@@ -54,6 +54,16 @@ xcodebuild build -project eNet.xcodeproj -scheme enet_static -configuration Rele
 #lipo -info Release-iphoneos/libenet.a
 
 
+# 检测C环境是否编译通过
+echo "CCCCCCCCCCCCCCC"
+cp ../../src/app_interface/appWrapper.h  ../../../.github/file/xp2p_c_demo/xp2p_c_demo/AppWrapper.h
+cp Release-iphoneos/libenet.a  ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/libenet.a
+cp _deps/libevent-build/Release-iphoneos/libevent_*.a   ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/
+cp _deps/mbedtls-build/library/Release-iphoneos/libmbed*.a   ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/
+cp _deps/minizip-build/Release-iphoneos/libminizip.a   ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/
+cp ../../../.github/file/libcurl.a  ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/
+
+xcodebuild build -project ../../../.github/file/xp2p_c_demo/xp2p_c_demo.xcodeproj -scheme xp2p_c_demo -configuration Release -sdk iphoneos -derivedDataPath ./build
 
 
 
