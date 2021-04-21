@@ -1,6 +1,8 @@
-name: Android XP2P CI
+name: Android XP2P RELEASE CI
 
-on: [push, pull_request]
+on:
+  release:
+    types: [published]
 
 env:
   IOT_SONATYPE_USERNAME: ${{ secrets.IOT_SONATYPE_USERNAME }}
