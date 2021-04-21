@@ -10,7 +10,11 @@ echo $GIT_BRANCH_IMAGE_VERSION
 # 1.拉取eNet支持库
 git clone https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-p2p.git
 cd iot-p2p
-git checkout $rb
+if [ $1 == 'Release' ]; then
+	git checkout $GIT_BRANCH_IMAGE_VERSION
+else
+    git checkout $rb
+fi
 
 rc=$(git rev-parse --short HEAD)
 echo $rc
