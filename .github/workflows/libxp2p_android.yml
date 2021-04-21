@@ -1,8 +1,10 @@
-name: Android XP2P RELEASE CI
+name: Android XP2P CI
 
 on:
-  release:
-    types: [published]
+  push:
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE'
 
 env:
   IOT_SONATYPE_USERNAME: ${{ secrets.IOT_SONATYPE_USERNAME }}
@@ -45,7 +47,12 @@ jobs:
         cmake_version=$(echo $(cmake --version) | perl -pe '($_)=/([0-9]+([.][0-9]+)+)/')
         echo +++++$cmake_version
         sed -i "s#x.x.x#$cmake_version#g" iot-p2p/samples/android/xnet/build.gradle
+    - name: Update sdk version
+      if: startsWith(github.event.ref, 'refs/tags')
+      run: |
         sh .github/script/update_version_for_android.sh
+    - name: Build with Gradle
+      run: |
         cd iot-p2p/samples/android
         ./gradlew assemble --stacktrace
     - name: Upload aar to Artifacts
