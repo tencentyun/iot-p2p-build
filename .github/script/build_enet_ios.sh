@@ -2,7 +2,7 @@
 #set -eo pipefail
 set -e
 
-rtt=$(git describe --tags `git rev-list --tags --max-count=1`)
+rtt=$GIT_BRANCH_IMAGE_VERSION
 rc=$(git rev-parse --short HEAD)
 rb=$(git rev-parse --abbrev-ref HEAD)
 echo 111---$rtt
