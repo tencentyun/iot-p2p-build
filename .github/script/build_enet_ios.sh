@@ -128,7 +128,7 @@ echo "-->>$resultvv"
 if [ $1 == 'Debug' ]; then
     git tag "$resultvv-beta.$poddatetime"
 else
-    git tag "$currtag"
+    git tag "$vtag"
 fi
 # ==========此处添加版本自增逻辑，如果是持续集成发snapshot，最新tag+1；如果是发布就发branch
 
