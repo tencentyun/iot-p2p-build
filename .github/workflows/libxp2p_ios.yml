@@ -1,6 +1,10 @@
 name: iOS XP2P CI
 
-on: [push, pull_request]
+on:
+  push:
+    paths-ignore: # 有時候不想要改個文档也触发 github actions
+      - '**.md'
+      - 'LICENSE'
 
 jobs:
   build-and-deploy:
@@ -8,6 +12,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     
     - name: build libenet
       if: startsWith(github.event.ref, 'refs/heads')
