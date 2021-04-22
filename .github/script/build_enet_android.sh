@@ -16,7 +16,13 @@ else
     git checkout $rb
 fi
 
-rc=$(git rev-parse --short HEAD)
+
+#3. 获取pp版本号
+VIDEOSDKRC=$(git rev-parse --short HEAD)
+rc=$rb+git.$VIDEOSDKRC
+if [ $1 == 'Release' ]; then
+    rc=$GIT_BRANCH_IMAGE_VERSION+git.$VIDEOSDKRC
+fi
 echo $rc
 
 cd samples/android

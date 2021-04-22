@@ -2,15 +2,14 @@
 #set -eo pipefail
 set -e
 
+rtt=$(git describe --tags `git rev-list --tags --max-count=1`)
 rc=$(git rev-parse --short HEAD)
 rb=$(git rev-parse --abbrev-ref HEAD)
-echo $rc
-echo $rb
+echo 111---$rtt
+echo 222---$rc
+echo 333---$rb
 
 gpg --quiet -d --passphrase "$PROVISIONING_PASSWORD" --batch .github/file/CMakeLists.txt.asc > .github/file/CMakeLists.txt
-
-git branch
-echo $GIT_BRANCH_IMAGE_VERSION
 
 #CURVERSION=$(git describe --tags `git rev-list --tags --max-count=1`) #获取tag
 #echo $CURVERSION
@@ -18,8 +17,19 @@ echo $GIT_BRANCH_IMAGE_VERSION
 git clone https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-p2p.git
 cd iot-p2p
 
-git checkout $rb
-VIDEOSDKVERSION=$(git rev-parse --short HEAD)
+#2. 切换分支
+if [ $1 == 'Debug' ]; then
+    git checkout $rb --
+else
+    git checkout $rtt
+fi
+
+#3. 获取pp版本号
+VIDEOSDKRC=$(git rev-parse --short HEAD)
+VIDEOSDKVERSION=$rb+git.$VIDEOSDKRC
+if [ $1 == 'Release' ]; then
+    VIDEOSDKVERSION=$rtt+git.$VIDEOSDKRC
+fi
 echo $VIDEOSDKVERSION
 
 
