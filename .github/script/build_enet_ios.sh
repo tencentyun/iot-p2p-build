@@ -82,20 +82,20 @@ xcodebuild build -project ../../../.github/file/xp2p_c_demo/xp2p_c_demo.xcodepro
 
 
 #触发pod发布
-git clone https://$GIT_ACCESS_TOKEN@github.com/tonychanchen/TIoTThridSDK.git
-cd TIoTThridSDK
+git clone https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-thirdparty-ios.git
+cd iot-thirdparty-ios
 
-cp ../../../src/app_interface/appWrapper.h  TIoTThridSDK/XP2P-iOS/Classes/AppWrapper.h
-sed -i "" "s/.*VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = \"$VIDEOSDKVERSION\";/g" TIoTThridSDK/XP2P-iOS/Classes/AppWrapper.h
+cp ../../../src/app_interface/appWrapper.h  Source/XP2P-iOS/Classes/AppWrapper.h
+sed -i "" "s/.*VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = \"$VIDEOSDKVERSION\";/g" Source/XP2P-iOS/Classes/AppWrapper.h
 
-cp ../Release-iphoneos/libenet.a TIoTThridSDK/XP2P-iOS/libenet.a
+cp ../Release-iphoneos/libenet.a Source/XP2P-iOS/libenet.a
 
 poddatetime=$(date '+%Y%m%d%H%M')
 echo $poddatetime
 
 git add .
 git commit -m "tencentyun/iot-p2p-build@$rc"
-git push https://$GIT_ACCESS_TOKEN@github.com/tonychanchen/TIoTThridSDK.git
+git push https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-thirdparty-ios.git
 
 # ==========此处添加版本自增逻辑，如果是持续集成发snapshot，最新tag+1；如果是发布就发branch
 vtag=${currtag#*v}
@@ -132,4 +132,4 @@ else
 fi
 # ==========此处添加版本自增逻辑，如果是持续集成发snapshot，最新tag+1；如果是发布就发branch
 
-git push https://$GIT_ACCESS_TOKEN@github.com/tonychanchen/TIoTThridSDK.git --tags
+git push https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-thirdparty-ios.git --tags
