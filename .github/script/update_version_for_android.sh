@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 rtt=$GIT_BRANCH_IMAGE_VERSION
 rc=$(git rev-parse --short HEAD)
@@ -19,7 +19,9 @@ branch=${currbra#*v}
 vbranch=${branch%x*}0
 echo $vbranch
 
-function version_ge() { test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)" == "$1"; }
+function version_ge(){
+    test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)" == "$1";
+}
 
 resultvv=$vbranch
 if version_ge $vtag $vbranch; then

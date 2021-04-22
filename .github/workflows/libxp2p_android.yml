@@ -61,13 +61,13 @@ jobs:
       run: |
         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
         export GIT_BRANCH_IMAGE_VERSION=$VERSION
-        sh .github/script/update_version_for_android.sh Release
+        bash .github/script/update_version_for_android.sh Release
     - name: Update sdk version debug
       if: startsWith(github.event.ref, 'refs/heads')
       run: |
         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
         export GIT_BRANCH_IMAGE_VERSION=$VERSION
-        sh .github/script/update_version_for_android.sh Debug
+        bash .github/script/update_version_for_android.sh Debug
     - name: Build with Gradle
       run: |
         cd iot-p2p/samples/android
