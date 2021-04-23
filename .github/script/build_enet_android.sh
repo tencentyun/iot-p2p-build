@@ -17,10 +17,10 @@ else
 fi
 
 
-#3. 获取pp版本号
+#3. 获取p2p版本号
 VIDEOSDKRC=$(git rev-parse --short HEAD)
 rc=$rb+git.$VIDEOSDKRC
-if [ $1 == 'Release' ]; then
+if [ "$1" = "Release" ]; then
     rc=$GIT_BRANCH_IMAGE_VERSION+git.$VIDEOSDKRC
 fi
 echo $rc
