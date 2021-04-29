@@ -13,3 +13,4 @@ snapshot
 snapshot
 snapshot
 snapshot
+1.3.0
