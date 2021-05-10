@@ -74,13 +74,18 @@ jobs:
       run: |
         cd iot-p2p/samples/android
         ./gradlew assemble --stacktrace
+    - name: Compress xp2p artifacts
+      run: |
+        mkdir xp2p_artifacts
+        cp iot-p2p/samples/android/xnet/build/outputs/aar/*-release.aar xp2p_artifacts/
+        cp -r iot-p2p/samples/android/xnet/build/intermediates/cmake/release/obj/ xp2p_artifacts/
+        zip -r xp2p_artifacts.zip xp2p_artifacts
     - name: Upload aar to Artifacts
       uses: actions/upload-artifact@v2
       with:
         name: xp2p
         path: |
-          iot-p2p/samples/android/xnet/build/outputs/aar/*-release.aar
-          iot-p2p/samples/android/xnet/build/intermediates/cmake/release/obj/
+          xp2p_artifacts.zip
 
     - name: Publish aar to Maven
       run: |
