@@ -23,6 +23,7 @@ rc=$rb+git.$VIDEOSDKRC
 if [ "$1" = "Release" ]; then
     rc=$GIT_BRANCH_IMAGE_VERSION+git.$VIDEOSDKRC
 fi
+rc=${rc#*v}
 echo $rc
 
 cd samples/android

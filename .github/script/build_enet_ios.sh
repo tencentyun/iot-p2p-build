@@ -33,6 +33,7 @@ VIDEOSDKVERSION=$rb+git.$VIDEOSDKRC
 if [ $1 == 'Release' ]; then
     VIDEOSDKVERSION=$rtt+git.$VIDEOSDKRC
 fi
+VIDEOSDKVERSION=${VIDEOSDKVERSION#*v}
 echo $VIDEOSDKVERSION
 
 
@@ -78,7 +79,7 @@ cp _deps/minizip-build/Release-iphoneos/libminizip.a   ../../../.github/file/xp2
 cp ../../../.github/file/libcurl.a  ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/
 
 xcodebuild build -project ../../../.github/file/xp2p_c_demo/xp2p_c_demo.xcodeproj -scheme xp2p_c_demo -configuration Release -sdk iphoneos -derivedDataPath ./build
-
+echo "CCCCCCCCCCCCCCC"
 
 
 #触发pod发布
