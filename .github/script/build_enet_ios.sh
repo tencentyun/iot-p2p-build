@@ -12,7 +12,7 @@ echo 111---$rtt
 echo 222---$rc
 echo 333---$rb
 
-gpg --quiet -d --passphrase "$PROVISIONING_PASSWORD" --batch .github/file/CMakeLists.txt.asc > .github/file/CMakeLists.txt
+#gpg --quiet -d --passphrase "$PROVISIONING_PASSWORD" --batch .github/file/CMakeLists.txt.asc > .github/file/CMakeLists.txt
 
 #CURVERSION=$(git describe --tags `git rev-list --tags --max-count=1`) #获取tag
 #echo $CURVERSION
@@ -42,7 +42,11 @@ mkdir -p build/ios
 
 cd build/ios
 
-cp ../../../.github/file/CMakeLists.txt   ../../CMakeLists.txt
+#cp ../../../.github/file/CMakeLists.txt   ../../CMakeLists.txt
+perl -i -pe "s#.*armv7;armv7s;arm64.*#\t\tset(CMAKE_OSX_ARCHITECTURES \"arm64\" CACHE STRING \"\" FORCE)#g" ../../CMakeLists.txt
+perl -i -pe "s#.*src/service.*#\t\"src/service/*\"\n\t\"src/app_interface/*\"#g" ../../CMakeLists.txt
+perl -i -pe "s#.*bundle_static_library.*# #g" ../../CMakeLists.txt
+
 cp ../../../.github/file/libcurl.a        ../../app_interface/libcurl.a
 
 mv ../../app_interface/curl_inc/*      ../../app_interface
