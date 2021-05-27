@@ -74,6 +74,13 @@ jobs:
       run: |
         cd iot-p2p/samples/android
         ./gradlew assemble --stacktrace
+    - name: Add armeabi
+      run: |
+        cd iot-p2p/samples/android/xnet/build/outputs/aar
+        unzip xnet-release.aar -d tempFolder
+        cp -r tempFolder/jni/armeabi-v7a tempFolder/jni/armeabi
+        cp -r tempFolder/armeabi-v7a tempFolder/armeabi
+        jar cvf xnet-release.aar -C tempFolder/ .
     - name: Compress xp2p artifacts
       run: |
         mkdir xp2p_artifacts
