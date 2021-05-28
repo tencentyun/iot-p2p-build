@@ -78,6 +78,7 @@ jobs:
       run: |
         cd iot-p2p/samples/android/xnet/build/outputs/aar
         unzip xnet-release.aar -d tempFolder
+        rm xnet-release.aar
         cp -r tempFolder/jni/armeabi-v7a tempFolder/jni/armeabi
         cp -r tempFolder/armeabi-v7a tempFolder/armeabi
         jar cvf xnet-release.aar -C tempFolder/ .
