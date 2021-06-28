@@ -62,6 +62,8 @@ rm -rf ../../app_interface/readme.md
 
 mv ../../app_interface/   ../../src/app_interface/
 
+sed -i "" "s/.*VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = \"$VIDEOSDKVERSION\";/g" ../../src/app_interface/appWrapper.h
+
 cmake ../.. -GXcode -DCMAKE_INSTALL_PREFIX=$PWD/INSTALL -DENET_SELF_SIGN=ON -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_BUILD_TYPE=Debug -DENET_VERSION=v1.0.0 -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3
 
 
@@ -91,7 +93,7 @@ git clone https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-thirdparty-ios.git
 cd iot-thirdparty-ios
 
 cp ../../../src/app_interface/appWrapper.h  Source/XP2P-iOS/Classes/AppWrapper.h
-sed -i "" "s/.*VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = \"$VIDEOSDKVERSION\";/g" Source/XP2P-iOS/Classes/AppWrapper.h
+#sed -i "" "s/.*VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = \"$VIDEOSDKVERSION\";/g" Source/XP2P-iOS/Classes/AppWrapper.h
 
 cp ../Release-iphoneos/libenet.a Source/XP2P-iOS/libenet.a
 
