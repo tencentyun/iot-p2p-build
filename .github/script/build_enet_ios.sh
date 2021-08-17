@@ -44,7 +44,7 @@ cd build/ios
 
 #cp ../../../.github/file/CMakeLists.txt   ../../CMakeLists.txt
 perl -i -pe "s#.*armv7;armv7s;arm64.*#\t\tset(CMAKE_OSX_ARCHITECTURES \"arm64\" CACHE STRING \"\" FORCE)#g" ../../CMakeLists.txt
-perl -i -pe "s#.*src/service.*#\t\"src/service/*\"\n\t\"src/app_interface/*\"#g" ../../CMakeLists.txt
+perl -i -pe "s#.*src/proc.*#\t\"src/proc/*\"\n\t\"src/app_interface/*\"#g" ../../CMakeLists.txt
 perl -i -pe "s#.*bundle_static_library.*# #g" ../../CMakeLists.txt
 
 cp ../../../.github/file/libcurl.a        ../../app_interface/libcurl.a
