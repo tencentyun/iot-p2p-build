@@ -5,7 +5,7 @@ set -e
 rtt=$GIT_BRANCH_IMAGE_VERSION
 rc=$(git rev-parse --short HEAD)
 rb=$(git rev-parse --abbrev-ref HEAD)
-currtag=$(git describe --tags `git rev-list --tags --max-count=1`)
+currtag=$(git describe --tags --match "v[0-9]*" --abbrev=0 HEAD)
 currbra=$rb
 echo 000---$currtag
 echo 111---$rtt
