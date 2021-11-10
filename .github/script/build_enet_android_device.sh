@@ -33,13 +33,10 @@ cmake --version
 
 #wget https://dl.google.com/android/repository/android-ndk-r16b-linux-x86_64.zip
 #unzip android-ndk-r16b-linux-x86_64.zip
-echo "/usr/local/lib/"
-ls -l /usr/local/lib/
 
 echo "/usr/local/lib/android/sdk/ndk/16.1.4479499"
-ls -l /usr/local/lib/android/sdk/ndk/16.1.4479499
+ls -l /usr/local/lib/android/sdk/ndk/16.1.4479499/build/cmake
 
-which android.toolchain.cmake
 pwd ${ANDROID_HOME}
 
 mkdir -p build/android_arm64
