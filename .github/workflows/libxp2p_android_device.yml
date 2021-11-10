@@ -1,4 +1,4 @@
-name: Android XP2P CI
+name: Android Device CI
 
 on:
   push:

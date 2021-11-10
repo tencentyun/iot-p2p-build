@@ -3,6 +3,8 @@
 
 cd iot-p2p
 
+echo "first cmake"
+cmake --version
 ls -l
 
 wget https://cmake.org/files/v3.16/cmake-3.16.0-Linux-x86_64.tar.gz
@@ -10,6 +12,7 @@ tar zxvf cmake-3.16.0-Linux-x86_64.tar.gz
 
 #当前用户临时生效
 export PATH=$PATH:./cmake-3.16.0-Linux-x86_64/bin
+echo "second cmake"
 cmake --version
 
 
