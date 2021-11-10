@@ -1,24 +1,39 @@
 #!/bin/sh
 #set -eo pipefail
 
-cd iot-p2p
-
-echo "first cmake"
+set -e
 cmake --version
-ls -l
 
-wget https://cmake.org/files/v3.16/cmake-3.16.0-Linux-x86_64.tar.gz
-tar zxvf cmake-3.16.0-Linux-x86_64.tar.gz
+rb=$(git rev-parse --abbrev-ref HEAD)
+echo $rb
+echo $GIT_BRANCH_IMAGE_VERSION
 
-#当前用户临时生效
-export PATH=$PATH:./cmake-3.16.0-Linux-x86_64/bin
+# 1.拉取eNet支持库
+git clone https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-p2p.git
+cd iot-p2p
+if [ "$1" = "Release" ]; then
+    git checkout $GIT_BRANCH_IMAGE_VERSION
+else
+    git checkout $rb
+fi
+
+
+#echo "first cmake"
+#cmake --version
+#ls -l
+#
+#wget https://cmake.org/files/v3.16/cmake-3.16.0-Linux-x86_64.tar.gz
+#tar zxvf cmake-3.16.0-Linux-x86_64.tar.gz
+#
+##当前用户临时生效
+#export PATH=$PATH:./cmake-3.16.0-Linux-x86_64/bin
 echo "second cmake"
 cmake --version
 
 
-wget https://dl.google.com/android/repository/android-ndk-r16b-linux-x86_64.zip
-unzip android-ndk-r16b-linux-x86_64.zip
-
+#wget https://dl.google.com/android/repository/android-ndk-r16b-linux-x86_64.zip
+#unzip android-ndk-r16b-linux-x86_64.zip
+which ndk
 
 mkdir -p build/android_arm64
 cd build/android_arm64

@@ -22,6 +22,16 @@ jobs:
       with:
         fetch-depth: 0
     
+    - name: Setup cmake
+      uses: jwlawson/actions-setup-cmake@v1.8
+      with:
+        cmake-version: '3.17.0'
+    - name: Use cmake
+      run: echo +++++$(cmake --version)
+      
+    - name: Setup NDK
+      run: echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;16.1.4479499"
+      
     - name: build libenet debug
       if: startsWith(github.event.ref, 'refs/heads')
       run: |
@@ -41,12 +51,7 @@ jobs:
         GIT_ACCESS_TOKEN: ${{ secrets.IOT_GITHUB_ACCESS_TOKEN }}
         PROVISIONING_PASSWORD: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
     
-#    - name: Setup cmake
-#      uses: jwlawson/actions-setup-cmake@v1.8
-#      with:
-#        cmake-version: '3.18.4'
-#    - name: Use cmake
-#      run: echo +++++$(cmake --version)
+    
 #    - name: Update Values of Signing
 #      run: |
 #        export KEY_ID_OF_SIGN=$IOT_GPG_KEYNAME
