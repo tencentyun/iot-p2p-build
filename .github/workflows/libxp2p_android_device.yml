@@ -1,0 +1,119 @@
+name: Android XP2P CI
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE'
+
+env:
+  IOT_SONATYPE_USERNAME: ${{ secrets.IOT_SONATYPE_USERNAME }}
+  IOT_SONATYPE_PASSWORD: ${{ secrets.IOT_SONATYPE_PASSWORD }}
+  GPG_DECRYPT_PASSPHRASE: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
+  IOT_GPG_KEYNAME: ${{ secrets.IOT_GPG_KEYNAME }}
+  IOT_GPG_PASSPHRASE: ${{ secrets.IOT_GPG_PASSPHRASE }}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-18.04
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    
+    - name: build libenet debug
+      if: startsWith(github.event.ref, 'refs/heads')
+      run: |
+        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+        export GIT_BRANCH_IMAGE_VERSION=$VERSION
+        sh .github/script/build_enet_android_device.sh Debug
+      env:
+        GIT_ACCESS_TOKEN: ${{ secrets.IOT_GITHUB_ACCESS_TOKEN }}
+        PROVISIONING_PASSWORD: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
+    - name: build libenet release
+      if: startsWith(github.event.ref, 'refs/tags')
+      run: |
+        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+        export GIT_BRANCH_IMAGE_VERSION=$VERSION
+        sh .github/script/build_enet_android_device.sh Release
+      env:
+        GIT_ACCESS_TOKEN: ${{ secrets.IOT_GITHUB_ACCESS_TOKEN }}
+        PROVISIONING_PASSWORD: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
+    
+#    - name: Setup cmake
+#      uses: jwlawson/actions-setup-cmake@v1.8
+#      with:
+#        cmake-version: '3.18.4'
+#    - name: Use cmake
+#      run: echo +++++$(cmake --version)
+#    - name: Update Values of Signing
+#      run: |
+#        export KEY_ID_OF_SIGN=$IOT_GPG_KEYNAME
+#        export PASSWORD_OF_SIGN=$IOT_GPG_PASSPHRASE
+#        sh .github/script/update_values_for_sign.sh
+#    - name: Build with Gradle
+#      run: |
+#        gpg -d --passphrase "$GPG_DECRYPT_PASSPHRASE" --batch --quiet .github/file/secring.gpg.asc > secring.gpg
+#        echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;22.0.7026061"
+#        cmake_version=$(echo $(cmake --version) | perl -pe '($_)=/([0-9]+([.][0-9]+)+)/')
+#        echo +++++$cmake_version
+#        sed -i "s#x.x.x#$cmake_version#g" iot-p2p/samples/android/xnet/build.gradle
+#    - name: Update sdk version release
+#      if: startsWith(github.event.ref, 'refs/tags')
+#      run: |
+#        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+#        export GIT_BRANCH_IMAGE_VERSION=$VERSION
+#        bash .github/script/update_version_for_android.sh Release
+#    - name: Update sdk version debug
+#      if: startsWith(github.event.ref, 'refs/heads')
+#      run: |
+#        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+#        export GIT_BRANCH_IMAGE_VERSION=$VERSION
+#        bash .github/script/update_version_for_android.sh Debug
+#    - name: Build with Gradle
+#      run: |
+#        cd iot-p2p/samples/android
+#        ./gradlew assemble --stacktrace
+#    - name: Add armeabi
+#      run: |
+#        cd iot-p2p/samples/android/xnet/build/outputs/aar
+#        unzip xnet-release.aar -d tempFolder
+#        rm xnet-release.aar
+#        cp -r tempFolder/jni/armeabi-v7a tempFolder/jni/armeabi
+#        cp -r tempFolder/armeabi-v7a tempFolder/armeabi
+#        jar cvf xnet-release.aar -C tempFolder/ .
+#    - name: Compress xp2p artifacts
+#      run: |
+#        mkdir xp2p_artifacts
+#        cp iot-p2p/samples/android/xnet/build/outputs/aar/*-release.aar xp2p_artifacts/
+#        cp -r iot-p2p/samples/android/xnet/build/intermediates/cmake/release/obj/ xp2p_artifacts/
+#        zip -r xp2p_artifacts.zip xp2p_artifacts
+#    - name: Upload aar to Artifacts
+#      uses: actions/upload-artifact@v2
+#      with:
+#        name: xp2p
+#        path: |
+#          xp2p_artifacts.zip
+    # - name: Get release
+    #   if: startsWith(github.event.ref, 'refs/tags')
+    #   id: get_release
+    #   uses: bruceadams/get-release@v1.2.2
+    #   env:
+    #     GITHUB_TOKEN: ${{ github.token }}
+    # - name: Upload Release Asset
+    #   if: startsWith(github.event.ref, 'refs/tags')
+    #   id: upload-release-asset
+    #   uses: actions/upload-release-asset@v1
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #   with:
+    #     upload_url: ${{ steps.get_release.outputs.upload_url }}
+    #     asset_path: ./xp2p_artifacts.zip
+    #     asset_name: xp2p_artifacts.zip
+    #     asset_content_type: application/zip
+
+#    - name: Publish aar to Maven
+#      run: |
+#        cd iot-p2p/samples/android
+#        ./gradlew publish
