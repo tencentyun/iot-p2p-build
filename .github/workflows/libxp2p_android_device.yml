@@ -53,12 +53,12 @@ jobs:
     
     - name: Build with Gradle
       run: |
-        cd device_video_aar
+        cd iot-p2p/android_device/device_video_aar/
         ./gradlew build
     
     - name: Publish aar to Maven
       run: |
-        cd device_video_aar
+        cd iot-p2p/android_device/device_video_aar/
         ./gradlew publish
     
 #    - name: Update Values of Signing
