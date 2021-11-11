@@ -49,3 +49,22 @@ mkdir -p build/android_armv7
 cd build/android_armv7
 cmake ../.. -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/16.1.4479499/build/cmake/android.toolchain.cmake  -DANDROID_TOOLCHAIN_NAME=arm-linux-androideabi-4.9  -DANDROID_NDK=/usr/local/lib/android/sdk/ndk/16.1.4479499  -DCMAKE_BUILD_TYPE=Release  -DANDROID_NATIVE_API_LEVEL=android-9  -DANDROID_ABI=armeabi-v7a -DANDROID_TOOLCHAIN=clang
 make all -j8
+
+cd ../../
+mv build/android_arm64/libenet.a  android_device/lib/arm64-v8a
+mv build/android_arm64/_deps/libevent-build/*.a  android_device/lib/arm64-v8a
+mv build/android_arm64/_deps/mbedtls-build/library/*.a  android_device/lib/arm64-v8a
+mv build/android_arm64/_deps/minizip-build/*.a  android_device/lib/arm64-v8a
+mv build/android_arm64/_deps/tinyxml2-build/*.a  android_device/lib/arm64-v8a
+
+mv build/android_armv7/libenet.a  android_device/lib/armeabi-v7a
+mv build/android_armv7/_deps/libevent-build/*.a  android_device/lib/armeabi-v7a
+mv build/android_armv7/_deps/mbedtls-build/library/*.a  android_device/lib/armeabi-v7a
+mv build/android_armv7/_deps/minizip-build/*.a  android_device/lib/armeabi-v7a
+mv build/android_armv7/_deps/tinyxml2-build/*.a  android_device/lib/armeabi-v7a
+
+cd android_device
+./cmake_build.sh ANDROID
+
+ls -l output/arm64-v8a/
+ls -l output/armeabi-v7a/
