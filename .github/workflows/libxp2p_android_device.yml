@@ -52,12 +52,14 @@ jobs:
         PROVISIONING_PASSWORD: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
     
     - name: Build with Gradle
+      run: |
         cd device_video_aar
-        run: ./gradlew build
+        ./gradlew build
     
     - name: Publish aar to Maven
+      run: |
         cd device_video_aar
-        run: ./gradlew publish
+        ./gradlew publish
     
 #    - name: Update Values of Signing
 #      run: |
