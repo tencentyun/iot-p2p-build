@@ -53,11 +53,13 @@ jobs:
     
     - name: Build with Gradle
       run: |
+        chmod -R 777 iot-p2p/android_device/device_video_aar/
         cd iot-p2p/android_device/device_video_aar/
         ./gradlew build
     
     - name: Publish aar to Maven
       run: |
+        chmod -R 777 iot-p2p/android_device/device_video_aar/
         cd iot-p2p/android_device/device_video_aar/
         ./gradlew publish
     
