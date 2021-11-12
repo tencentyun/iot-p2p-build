@@ -69,5 +69,5 @@ cd android_device
 ls -l output/arm64-v8a/
 ls -l output/armeabi-v7a/
 
-mv output/armeabi-v7a/libiot_video_demo.so   device_video_aar/explorer-device-video-sdk/libs
-mv output/arm64-v8a/libiot_video_demo.so   device_video_aar/explorer-device-video-sdk/libs
+mv output/armeabi-v7a/libiot_video_demo.so   device_video_aar/explorer-device-video-sdk/libs/armeabi-v7a
+mv output/arm64-v8a/libiot_video_demo.so   device_video_aar/explorer-device-video-sdk/libs/arm64-v8a
