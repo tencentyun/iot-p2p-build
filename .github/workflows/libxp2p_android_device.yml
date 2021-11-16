@@ -32,19 +32,6 @@ jobs:
     - name: Setup NDK
       run: echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;16.1.4479499"
       
-    - name: Update sdk version debug
-      if: startsWith(github.event.ref, 'refs/heads')
-      run: |
-        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-        export GIT_BRANCH_IMAGE_VERSION=$VERSION
-        bash .github/script/update_version_for_android.sh Debug
-        
-    - name: Update sdk version release
-      if: startsWith(github.event.ref, 'refs/tags')
-      run: |
-        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-        export GIT_BRANCH_IMAGE_VERSION=$VERSION
-        bash .github/script/update_version_for_android.sh Release
         
     - name: build libenet debug
       if: startsWith(github.event.ref, 'refs/heads')
@@ -65,6 +52,26 @@ jobs:
         GIT_ACCESS_TOKEN: ${{ secrets.IOT_GITHUB_ACCESS_TOKEN }}
         PROVISIONING_PASSWORD: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
     
+    - name: Update sdk version debug
+      if: startsWith(github.event.ref, 'refs/heads')
+      run: |
+        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+        export GIT_BRANCH_IMAGE_VERSION=$VERSION
+        bash .github/script/update_version_for_android.sh Debug
+        
+    - name: Update sdk version release
+      if: startsWith(github.event.ref, 'refs/tags')
+      run: |
+        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+        export GIT_BRANCH_IMAGE_VERSION=$VERSION
+        bash .github/script/update_version_for_android.sh Release
+
+    - name: Update Values of Signing
+      run: |
+        export KEY_ID_OF_SIGN=$IOT_GPG_KEYNAME
+        export PASSWORD_OF_SIGN=$IOT_GPG_PASSPHRASE
+        sh .github/script/update_values_for_sign.sh
+        
     - name: Build with Gradle
       run: |
         chmod -R 777 iot-p2p/android_device/device_video_aar/
@@ -77,11 +84,6 @@ jobs:
         cd iot-p2p/android_device/device_video_aar/
         ./gradlew publish
     
-#    - name: Update Values of Signing
-#      run: |
-#        export KEY_ID_OF_SIGN=$IOT_GPG_KEYNAME
-#        export PASSWORD_OF_SIGN=$IOT_GPG_PASSPHRASE
-#        sh .github/script/update_values_for_sign.sh
 #    - name: Build with Gradle
 #      run: |
 #        gpg -d --passphrase "$GPG_DECRYPT_PASSPHRASE" --batch --quiet .github/file/secring.gpg.asc > secring.gpg
