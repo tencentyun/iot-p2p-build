@@ -32,6 +32,20 @@ jobs:
     - name: Setup NDK
       run: echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;16.1.4479499"
       
+    - name: Update sdk version debug
+      if: startsWith(github.event.ref, 'refs/heads')
+      run: |
+        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+        export GIT_BRANCH_IMAGE_VERSION=$VERSION
+        bash .github/script/update_version_for_android.sh Debug
+        
+    - name: Update sdk version release
+      if: startsWith(github.event.ref, 'refs/tags')
+      run: |
+        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+        export GIT_BRANCH_IMAGE_VERSION=$VERSION
+        bash .github/script/update_version_for_android.sh Release
+        
     - name: build libenet debug
       if: startsWith(github.event.ref, 'refs/heads')
       run: |
@@ -75,18 +89,6 @@ jobs:
 #        cmake_version=$(echo $(cmake --version) | perl -pe '($_)=/([0-9]+([.][0-9]+)+)/')
 #        echo +++++$cmake_version
 #        sed -i "s#x.x.x#$cmake_version#g" iot-p2p/samples/android/xnet/build.gradle
-#    - name: Update sdk version release
-#      if: startsWith(github.event.ref, 'refs/tags')
-#      run: |
-#        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-#        export GIT_BRANCH_IMAGE_VERSION=$VERSION
-#        bash .github/script/update_version_for_android.sh Release
-#    - name: Update sdk version debug
-#      if: startsWith(github.event.ref, 'refs/heads')
-#      run: |
-#        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-#        export GIT_BRANCH_IMAGE_VERSION=$VERSION
-#        bash .github/script/update_version_for_android.sh Debug
 #    - name: Build with Gradle
 #      run: |
 #        cd iot-p2p/samples/android
