@@ -63,13 +63,6 @@ mv build/android_armv7/_deps/mbedtls-build/library/*.a  android_device/lib/armea
 mv build/android_armv7/_deps/minizip-build/*.a  android_device/lib/armeabi-v7a
 mv build/android_armv7/_deps/tinyxml2-build/*.a  android_device/lib/armeabi-v7a
 
-#move app interface to dest dir
-mkdir -p android_device/samples/iot_video_demo/app_interface
-mv app_interface/curl_inc/*       android_device/samples/iot_video_demo/app_interface
-mv app_interface/app_p2p/*        android_device/samples/iot_video_demo/app_interface
-mv app_interface/cloud_api/*      android_device/samples/iot_video_demo/app_interface
-mv app_interface/utils/*          android_device/samples/iot_video_demo/app_interface
-
 cd android_device
 ./cmake_build.sh ANDROID
 
