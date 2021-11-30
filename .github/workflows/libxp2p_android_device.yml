@@ -1,0 +1,86 @@
+name: Android Device CI
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE'
+
+env:
+  IOT_SONATYPE_USERNAME: ${{ secrets.IOT_SONATYPE_USERNAME }}
+  IOT_SONATYPE_PASSWORD: ${{ secrets.IOT_SONATYPE_PASSWORD }}
+  GPG_DECRYPT_PASSPHRASE: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
+  IOT_GPG_KEYNAME: ${{ secrets.IOT_GPG_KEYNAME }}
+  IOT_GPG_PASSPHRASE: ${{ secrets.IOT_GPG_PASSPHRASE }}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-18.04
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    
+    - name: Setup cmake
+      uses: jwlawson/actions-setup-cmake@v1.8
+      with:
+        cmake-version: '3.17.0'
+    - name: Use cmake
+      run: echo +++++$(cmake --version)
+      
+    - name: Setup NDK
+      run: echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;16.1.4479499"
+      
+        
+    - name: build libenet debug
+      if: startsWith(github.event.ref, 'refs/heads')
+      run: |
+        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+        export GIT_BRANCH_IMAGE_VERSION=$VERSION
+        sh .github/script/build_enet_android_device.sh Debug
+      env:
+        GIT_ACCESS_TOKEN: ${{ secrets.IOT_GITHUB_ACCESS_TOKEN }}
+        PROVISIONING_PASSWORD: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
+    - name: build libenet release
+      if: startsWith(github.event.ref, 'refs/tags')
+      run: |
+        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+        export GIT_BRANCH_IMAGE_VERSION=$VERSION
+        sh .github/script/build_enet_android_device.sh Release
+      env:
+        GIT_ACCESS_TOKEN: ${{ secrets.IOT_GITHUB_ACCESS_TOKEN }}
+        PROVISIONING_PASSWORD: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
+    
+    - name: Update sdk version debug
+      if: startsWith(github.event.ref, 'refs/heads')
+      run: |
+        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+        export GIT_BRANCH_IMAGE_VERSION=$VERSION
+        bash .github/script/update_version_for_android.sh Debug
+        
+    - name: Update sdk version release
+      if: startsWith(github.event.ref, 'refs/tags')
+      run: |
+        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+        export GIT_BRANCH_IMAGE_VERSION=$VERSION
+        bash .github/script/update_version_for_android.sh Release
+
+    - name: Update Values of Signing
+      run: |
+        export KEY_ID_OF_SIGN=$IOT_GPG_KEYNAME
+        export PASSWORD_OF_SIGN=$IOT_GPG_PASSPHRASE
+        sh .github/script/update_values_for_sign.sh
+        
+    - name: Build with Gradle
+      run: |
+        gpg -d --passphrase "$GPG_DECRYPT_PASSPHRASE" --batch --quiet .github/file/secring.gpg.asc > secring.gpg
+        chmod -R 777 iot-p2p/android_device/device_video_aar/
+        cd iot-p2p/android_device/device_video_aar/
+        ./gradlew build
+    
+    - name: Publish aar to Maven
+      run: |
+        chmod -R 777 iot-p2p/android_device/device_video_aar/
+        cd iot-p2p/android_device/device_video_aar/
+        ./gradlew publish
