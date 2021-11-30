@@ -42,9 +42,9 @@ fi
 echo "-->>$resultvv"
 
 if [ "$1" = "Debug" ]; then
-	sed -i 's#def libVersion.*#def libVersion = \"'$resultvv'-SNAPSHOT\"#g' iot-p2p/samples/android/xnet/build.gradle
+	sed -i 's#def libVersion.*#def libVersion = \"'$resultvv'-SNAPSHOT\"#g' $2
 else
-	sed -i 's#def libVersion.*#def libVersion = \"'$vtag'\"#g' iot-p2p/samples/android/xnet/build.gradle
+	sed -i 's#def libVersion.*#def libVersion = \"'$vtag'\"#g' $2
 fi
 # ==========此处添加版本自增逻辑，如果是持续集成发snapshot，最新tag+1；如果是发布就发branch
 
