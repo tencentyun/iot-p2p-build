@@ -83,7 +83,7 @@ cp Release-iphoneos/libenet.a  ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2
 cp _deps/libevent-build/Release-iphoneos/libevent_*.a   ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/
 cp _deps/mbedtls-build/library/Release-iphoneos/libmbed*.a   ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/
 cp _deps/minizip-build/Release-iphoneos/libminizip.a   ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/
-cp _deps/tinyxml2-build/Release-iphoneos/libtinyxml2d.a   ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/
+cp _deps/tinyxml2-build/Release-iphoneos/libtinyxml*.a   ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/
 
 cp ../../../.github/file/libcurl.a  ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/
 
@@ -103,7 +103,7 @@ cp ../Release-iphoneos/libenet.a Source/XP2P-iOS/libenet.a
 cp ../_deps/libevent-build/Release-iphoneos/libevent_*.a   Source/XP2P-iOS/
 cp ../_deps/mbedtls-build/library/Release-iphoneos/libmbed*.a   Source/XP2P-iOS/
 cp ../_deps/minizip-build/Release-iphoneos/libminizip.a   Source/XP2P-iOS/
-cp ../_deps/tinyxml2-build/Release-iphoneos/libtinyxml2d.a   Source/XP2P-iOS/
+cp ../_deps/tinyxml2-build/Release-iphoneos/libtinyxml*.a   Source/XP2P-iOS/
 
 
 poddatetime=$(date '+%Y%m%d%H%M')
