@@ -63,7 +63,7 @@ rm -rf ../../app_interface/readme.md
 mv ../../app_interface/   ../../src/app_interface/
 
 sed -i "" "s/.*VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = \"$VIDEOSDKVERSION\";/g" ../../src/app_interface/appWrapper.h
-
+echo "2.5.x_ent"
 cmake ../.. -GXcode -DCMAKE_INSTALL_PREFIX=$PWD/INSTALL -DENET_SELF_SIGN=ON -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_BUILD_TYPE=MinSizeRel -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3 -DBUILD_WITH_TLS=OFF -DENET_NO_STATIC_BINARY=ON -DBUNDLE_CERTS=OFF -DWITH_DHT=OFF -DBUILD_WITH_FS=OFF -DWITH_ZIP=OFF -DWITH_XDFS=OFF -DWITH_UPNP=OFF -DENET_VERSION=v1.3.0
 
 
@@ -78,10 +78,13 @@ xcodebuild build -project eNet.xcodeproj -scheme enet_static -configuration Rele
 echo "CCCCCCCCCCCCCCC"
 mkdir -p ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS
 cp ../../src/app_interface/appWrapper.h  ../../../.github/file/xp2p_c_demo/xp2p_c_demo/AppWrapper.h
+cp Release-iphoneos/libblake3.a  ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/libblake3.a
 cp Release-iphoneos/libenet.a  ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/libenet.a
 cp _deps/libevent-build/Release-iphoneos/libevent_*.a   ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/
 cp _deps/mbedtls-build/library/Release-iphoneos/libmbed*.a   ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/
 cp _deps/minizip-build/Release-iphoneos/libminizip.a   ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/
+cp _deps/tinyxml2-build/Release-iphoneos/libtinyxml2d.a   ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/
+
 cp ../../../.github/file/libcurl.a  ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/
 
 xcodebuild build -project ../../../.github/file/xp2p_c_demo/xp2p_c_demo.xcodeproj -scheme xp2p_c_demo -configuration Release -sdk iphoneos -derivedDataPath ./build
@@ -95,7 +98,13 @@ cd iot-thirdparty-ios
 cp ../../../src/app_interface/appWrapper.h  Source/XP2P-iOS/Classes/AppWrapper.h
 #sed -i "" "s/.*VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = \"$VIDEOSDKVERSION\";/g" Source/XP2P-iOS/Classes/AppWrapper.h
 
+cp ../Release-iphoneos/libblake3.a Source/XP2P-iOS/libblake3.a
 cp ../Release-iphoneos/libenet.a Source/XP2P-iOS/libenet.a
+cp ../_deps/libevent-build/Release-iphoneos/libevent_*.a   Source/XP2P-iOS/
+cp ../_deps/mbedtls-build/library/Release-iphoneos/libmbed*.a   Source/XP2P-iOS/
+cp ../_deps/minizip-build/Release-iphoneos/libminizip.a   Source/XP2P-iOS/
+cp ../_deps/tinyxml2-build/Release-iphoneos/libtinyxml2d.a   Source/XP2P-iOS/
+
 
 poddatetime=$(date '+%Y%m%d%H%M')
 echo $poddatetime
