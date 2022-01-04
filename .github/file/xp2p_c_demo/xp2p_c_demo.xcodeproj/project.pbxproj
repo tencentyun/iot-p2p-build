@@ -8,16 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		F43A65B0262D6AB20020F435 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = F43A65A2262D6AB20020F435 /* main.c */; };
-		F43A65B1262D6AB20020F435 /* libenet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F43A65A4262D6AB20020F435 /* libenet.a */; };
-		F43A65B2262D6AB20020F435 /* libminizip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F43A65A5262D6AB20020F435 /* libminizip.a */; };
-		F43A65B3262D6AB20020F435 /* libevent_mbedtls.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F43A65A6262D6AB20020F435 /* libevent_mbedtls.a */; };
-		F43A65B4262D6AB20020F435 /* libevent_extra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F43A65A7262D6AB20020F435 /* libevent_extra.a */; };
-		F43A65B5262D6AB20020F435 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F43A65A8262D6AB20020F435 /* libevent_core.a */; };
-		F43A65B7262D6AB20020F435 /* libmbedcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F43A65AA262D6AB20020F435 /* libmbedcrypto.a */; };
-		F43A65B8262D6AB20020F435 /* libmbedx509.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F43A65AB262D6AB20020F435 /* libmbedx509.a */; };
-		F43A65B9262D6AB20020F435 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F43A65AC262D6AB20020F435 /* libcurl.a */; };
-		F43A65BA262D6AB20020F435 /* libmbedtls.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F43A65AD262D6AB20020F435 /* libmbedtls.a */; };
-		F43A65BB262D6AB20020F435 /* libevent_pthreads.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F43A65AE262D6AB20020F435 /* libevent_pthreads.a */; };
+		F4F8B91F278474C50096DE38 /* libtinyxml2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4F8B917278474C50096DE38 /* libtinyxml2.a */; };
+		F4F8B920278474C50096DE38 /* libenet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4F8B918278474C50096DE38 /* libenet.a */; };
+		F4F8B921278474C50096DE38 /* libblake3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4F8B919278474C50096DE38 /* libblake3.a */; };
+		F4F8B922278474C50096DE38 /* libminizip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4F8B91A278474C50096DE38 /* libminizip.a */; };
+		F4F8B923278474C50096DE38 /* libevent_extra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4F8B91B278474C50096DE38 /* libevent_extra.a */; };
+		F4F8B924278474C50096DE38 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4F8B91C278474C50096DE38 /* libevent_core.a */; };
+		F4F8B925278474C50096DE38 /* libmbedcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4F8B91D278474C50096DE38 /* libmbedcrypto.a */; };
+		F4F8B926278474C50096DE38 /* libevent_pthreads.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4F8B91E278474C50096DE38 /* libevent_pthreads.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,17 +33,15 @@
 /* Begin PBXFileReference section */
 		F43A6594262D6A750020F435 /* libxp2p_c_demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libxp2p_c_demo.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43A65A2262D6AB20020F435 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		F43A65A4262D6AB20020F435 /* libenet.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libenet.a; sourceTree = "<group>"; };
-		F43A65A5262D6AB20020F435 /* libminizip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libminizip.a; sourceTree = "<group>"; };
-		F43A65A6262D6AB20020F435 /* libevent_mbedtls.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent_mbedtls.a; sourceTree = "<group>"; };
-		F43A65A7262D6AB20020F435 /* libevent_extra.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent_extra.a; sourceTree = "<group>"; };
-		F43A65A8262D6AB20020F435 /* libevent_core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent_core.a; sourceTree = "<group>"; };
-		F43A65AA262D6AB20020F435 /* libmbedcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmbedcrypto.a; sourceTree = "<group>"; };
-		F43A65AB262D6AB20020F435 /* libmbedx509.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmbedx509.a; sourceTree = "<group>"; };
-		F43A65AC262D6AB20020F435 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
-		F43A65AD262D6AB20020F435 /* libmbedtls.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmbedtls.a; sourceTree = "<group>"; };
-		F43A65AE262D6AB20020F435 /* libevent_pthreads.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent_pthreads.a; sourceTree = "<group>"; };
 		F43A65AF262D6AB20020F435 /* AppWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppWrapper.h; sourceTree = "<group>"; };
+		F4F8B917278474C50096DE38 /* libtinyxml2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libtinyxml2.a; sourceTree = "<group>"; };
+		F4F8B918278474C50096DE38 /* libenet.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libenet.a; sourceTree = "<group>"; };
+		F4F8B919278474C50096DE38 /* libblake3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libblake3.a; sourceTree = "<group>"; };
+		F4F8B91A278474C50096DE38 /* libminizip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libminizip.a; sourceTree = "<group>"; };
+		F4F8B91B278474C50096DE38 /* libevent_extra.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent_extra.a; sourceTree = "<group>"; };
+		F4F8B91C278474C50096DE38 /* libevent_core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent_core.a; sourceTree = "<group>"; };
+		F4F8B91D278474C50096DE38 /* libmbedcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmbedcrypto.a; sourceTree = "<group>"; };
+		F4F8B91E278474C50096DE38 /* libevent_pthreads.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent_pthreads.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,16 +49,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F43A65B3262D6AB20020F435 /* libevent_mbedtls.a in Frameworks */,
-				F43A65B8262D6AB20020F435 /* libmbedx509.a in Frameworks */,
-				F43A65B9262D6AB20020F435 /* libcurl.a in Frameworks */,
-				F43A65B2262D6AB20020F435 /* libminizip.a in Frameworks */,
-				F43A65BA262D6AB20020F435 /* libmbedtls.a in Frameworks */,
-				F43A65B1262D6AB20020F435 /* libenet.a in Frameworks */,
-				F43A65B7262D6AB20020F435 /* libmbedcrypto.a in Frameworks */,
-				F43A65B5262D6AB20020F435 /* libevent_core.a in Frameworks */,
-				F43A65B4262D6AB20020F435 /* libevent_extra.a in Frameworks */,
-				F43A65BB262D6AB20020F435 /* libevent_pthreads.a in Frameworks */,
+				F4F8B921278474C50096DE38 /* libblake3.a in Frameworks */,
+				F4F8B91F278474C50096DE38 /* libtinyxml2.a in Frameworks */,
+				F4F8B922278474C50096DE38 /* libminizip.a in Frameworks */,
+				F4F8B920278474C50096DE38 /* libenet.a in Frameworks */,
+				F4F8B925278474C50096DE38 /* libmbedcrypto.a in Frameworks */,
+				F4F8B926278474C50096DE38 /* libevent_pthreads.a in Frameworks */,
+				F4F8B923278474C50096DE38 /* libevent_extra.a in Frameworks */,
+				F4F8B924278474C50096DE38 /* libevent_core.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,24 +84,22 @@
 			children = (
 				F43A65AF262D6AB20020F435 /* AppWrapper.h */,
 				F43A65A2262D6AB20020F435 /* main.c */,
-				F43A65A3262D6AB20020F435 /* XP2P-iOS */,
+				F4F8B916278474C50096DE38 /* XP2P-iOS */,
 			);
 			path = xp2p_c_demo;
 			sourceTree = "<group>";
 		};
-		F43A65A3262D6AB20020F435 /* XP2P-iOS */ = {
+		F4F8B916278474C50096DE38 /* XP2P-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				F43A65A4262D6AB20020F435 /* libenet.a */,
-				F43A65A5262D6AB20020F435 /* libminizip.a */,
-				F43A65A6262D6AB20020F435 /* libevent_mbedtls.a */,
-				F43A65A7262D6AB20020F435 /* libevent_extra.a */,
-				F43A65A8262D6AB20020F435 /* libevent_core.a */,
-				F43A65AA262D6AB20020F435 /* libmbedcrypto.a */,
-				F43A65AB262D6AB20020F435 /* libmbedx509.a */,
-				F43A65AC262D6AB20020F435 /* libcurl.a */,
-				F43A65AD262D6AB20020F435 /* libmbedtls.a */,
-				F43A65AE262D6AB20020F435 /* libevent_pthreads.a */,
+				F4F8B917278474C50096DE38 /* libtinyxml2.a */,
+				F4F8B918278474C50096DE38 /* libenet.a */,
+				F4F8B919278474C50096DE38 /* libblake3.a */,
+				F4F8B91A278474C50096DE38 /* libminizip.a */,
+				F4F8B91B278474C50096DE38 /* libevent_extra.a */,
+				F4F8B91C278474C50096DE38 /* libevent_core.a */,
+				F4F8B91D278474C50096DE38 /* libmbedcrypto.a */,
+				F4F8B91E278474C50096DE38 /* libevent_pthreads.a */,
 			);
 			path = "XP2P-iOS";
 			sourceTree = "<group>";
