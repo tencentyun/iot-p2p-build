@@ -68,7 +68,7 @@ cmake ../.. -GXcode -DCMAKE_INSTALL_PREFIX=$PWD/INSTALL -DENET_SELF_SIGN=ON -DCM
 
 
 # build lib
-xcodebuild build -project eNet.xcodeproj -scheme enet_static -configuration Release -sdk iphoneos -derivedDataPath ./build
+xcodebuild build -project eNet.xcodeproj -scheme enet_static -configuration Release -UseModernBuildSystem=YES -sdk iphoneos -derivedDataPath ./build
 
 #strip -x -S Release-iphoneos/libenet.a -o  Release-iphoneos/libenet_.a
 #lipo -info Release-iphoneos/libenet.a

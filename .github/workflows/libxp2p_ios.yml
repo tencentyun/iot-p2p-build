@@ -15,6 +15,12 @@ jobs:
       with:
         fetch-depth: 0
     
+    - name: List available Xcode versions
+      run: ls /Applications | grep Xcode
+      
+    - name: Select Xcode
+      run: sudo xcode-select -switch /Applications/Xcode13.app && /usr/bin/xcodebuild -version
+      
     - name: build libenet
       if: startsWith(github.event.ref, 'refs/heads')
       run: |
