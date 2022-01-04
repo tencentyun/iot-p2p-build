@@ -2,15 +2,17 @@
 #set -eo pipefail
 set -e
 
+rtt=$GIT_BRANCH_IMAGE_VERSION
 rc=$(git rev-parse --short HEAD)
 rb=$(git rev-parse --abbrev-ref HEAD)
-echo $rc
-echo $rb
+currtag=$(git describe --tags --match "v[0-9]*" --abbrev=0 HEAD)
+currbra=$rb
+echo 000---$currtag
+echo 111---$rtt
+echo 222---$rc
+echo 333---$rb
 
-gpg --quiet -d --passphrase "$PROVISIONING_PASSWORD" --batch .github/file/CMakeLists.txt.asc > .github/file/CMakeLists.txt
-
-git branch
-echo $GIT_BRANCH_IMAGE_VERSION
+#gpg --quiet -d --passphrase "$PROVISIONING_PASSWORD" --batch .github/file/CMakeLists.txt.asc > .github/file/CMakeLists.txt
 
 #CURVERSION=$(git describe --tags `git rev-list --tags --max-count=1`) #获取tag
 #echo $CURVERSION
@@ -18,8 +20,20 @@ echo $GIT_BRANCH_IMAGE_VERSION
 git clone https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-p2p.git
 cd iot-p2p
 
-git checkout $rb
-VIDEOSDKVERSION=$(git rev-parse --short HEAD)
+#2. 切换分支
+if [ $1 == 'Debug' ]; then
+    git checkout $rb --
+else
+    git checkout $rtt
+fi
+
+#3. 获取pp版本号
+VIDEOSDKRC=$(git rev-parse --short HEAD)
+VIDEOSDKVERSION=$rb+git.$VIDEOSDKRC
+if [ $1 == 'Release' ]; then
+    VIDEOSDKVERSION=$rtt+git.$VIDEOSDKRC
+fi
+VIDEOSDKVERSION=${VIDEOSDKVERSION#*v}
 echo $VIDEOSDKVERSION
 
 
@@ -28,7 +42,11 @@ mkdir -p build/ios
 
 cd build/ios
 
-cp ../../../.github/file/CMakeLists.txt   ../../CMakeLists.txt
+#cp ../../../.github/file/CMakeLists.txt   ../../CMakeLists.txt
+#perl -i -pe "s#.*armv7;armv7s;arm64.*#\t\tset(CMAKE_OSX_ARCHITECTURES \"arm64\" CACHE STRING \"\" FORCE)#g" ../../CMakeLists.txt
+perl -i -pe "s#.*src/dns.*#\t\"src/dns/*\"\n\t\"src/app_interface/*\"#g" ../../CMakeLists.txt
+#perl -i -pe "s#.*bundle_static_library.*# #g" ../../CMakeLists.txt
+
 cp ../../../.github/file/libcurl.a        ../../app_interface/libcurl.a
 
 mv ../../app_interface/curl_inc/*      ../../app_interface
@@ -44,7 +62,9 @@ rm -rf ../../app_interface/readme.md
 
 mv ../../app_interface/   ../../src/app_interface/
 
-cmake ../.. -GXcode -DCMAKE_INSTALL_PREFIX=$PWD/INSTALL -DENET_SELF_SIGN=ON -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_BUILD_TYPE=Debug -DENET_VERSION=v1.0.0 -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3
+sed -i "" "s/.*VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = \"$VIDEOSDKVERSION\";/g" ../../src/app_interface/appWrapper.h
+
+cmake ../.. -GXcode -DCMAKE_INSTALL_PREFIX=$PWD/INSTALL -DENET_SELF_SIGN=ON -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_BUILD_TYPE=MinSizeRel -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3 -DBUILD_WITH_TLS=OFF -DENET_NO_STATIC_BINARY=ON -DBUNDLE_CERTS=OFF -DWITH_DHT=OFF -DBUILD_WITH_FS=OFF -DWITH_ZIP=OFF -DWITH_XDFS=OFF -DWITH_UPNP=OFF -DENET_VERSION=v1.3.0
 
 
 # build lib
@@ -65,24 +85,58 @@ cp _deps/minizip-build/Release-iphoneos/libminizip.a   ../../../.github/file/xp2
 cp ../../../.github/file/libcurl.a  ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/
 
 xcodebuild build -project ../../../.github/file/xp2p_c_demo/xp2p_c_demo.xcodeproj -scheme xp2p_c_demo -configuration Release -sdk iphoneos -derivedDataPath ./build
-
+echo "CCCCCCCCCCCCCCC"
 
 
 #触发pod发布
-git clone https://$GIT_ACCESS_TOKEN@github.com/tonychanchen/TIoTThridSDK.git
-cd TIoTThridSDK
+git clone https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-thirdparty-ios.git
+cd iot-thirdparty-ios
 
-cp ../../../src/app_interface/appWrapper.h  TIoTThridSDK/XP2P-iOS/Classes/AppWrapper.h
-sed -i "" "s/.*VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = \"$VIDEOSDKVERSION\";/g" TIoTThridSDK/XP2P-iOS/Classes/AppWrapper.h
+cp ../../../src/app_interface/appWrapper.h  Source/XP2P-iOS/Classes/AppWrapper.h
+#sed -i "" "s/.*VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = \"$VIDEOSDKVERSION\";/g" Source/XP2P-iOS/Classes/AppWrapper.h
 
-cp ../Release-iphoneos/libenet.a TIoTThridSDK/XP2P-iOS/libenet.a
+cp ../Release-iphoneos/libenet.a Source/XP2P-iOS/libenet.a
 
 poddatetime=$(date '+%Y%m%d%H%M')
 echo $poddatetime
 
 git add .
 git commit -m "tencentyun/iot-p2p-build@$rc"
-git push https://$GIT_ACCESS_TOKEN@github.com/tonychanchen/TIoTThridSDK.git
+git push https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-thirdparty-ios.git
 
-git tag "1.0.6-beta.$poddatetime"
-git push https://$GIT_ACCESS_TOKEN@github.com/tonychanchen/TIoTThridSDK.git --tags
+# ==========此处添加版本自增逻辑，如果是持续集成发snapshot，最新tag+1；如果是发布就发branch
+vtag=${currtag#*v}
+echo $vtag
+
+
+branch=${currbra#*v}
+vbranch=${branch%x*}0
+echo $vbranch
+
+function version_ge() { test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)" == "$1"; }
+
+resultvv=$vbranch
+if version_ge $vtag $vbranch; then
+    
+    echo "$vtag is greater than or equal to $vbranch"
+    
+    vtaglist=(${vtag//./ })
+    
+    firsttag=${vtaglist[0]}
+    secondtag=${vtaglist[1]}
+    thirdtag=${vtaglist[2]}
+    thirdtag=`expr $thirdtag + 1`
+    
+    resultvv=$firsttag.$secondtag.$thirdtag
+fi
+
+echo "-->>$resultvv"
+
+if [ $1 == 'Debug' ]; then
+    git tag "xp2p-v$resultvv-beta.$poddatetime"
+else
+    git tag "xp2p-v$vtag"
+fi
+# ==========此处添加版本自增逻辑，如果是持续集成发snapshot，最新tag+1；如果是发布就发branch
+
+git push https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-thirdparty-ios.git --tags
