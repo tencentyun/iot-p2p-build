@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: macOS-latest
+    runs-on: macos-11.4
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -19,7 +19,7 @@ jobs:
       run: ls /Applications | grep Xcode
       
     - name: Select Xcode
-      run: sudo xcode-select -switch /Applications/Xcode_13.2.app && /usr/bin/xcodebuild -version
+      run: sudo xcode-select -switch /Applications/Xcode_13.2.1.app && /usr/bin/xcodebuild -version
       
     - name: build libenet
       if: startsWith(github.event.ref, 'refs/heads')
