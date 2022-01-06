@@ -13,5 +13,5 @@ iot-p2p/
 *.hpp
 *.java
 *.h
-build_*.sh
+#build_*.sh
 iot_build*.sh
