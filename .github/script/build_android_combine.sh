@@ -13,6 +13,15 @@ else
     git checkout $rb
 fi
 
+# 1.1获取p2p版本号
+VIDEOSDKRC=$(git rev-parse --short HEAD)
+rc=$rb+git.$VIDEOSDKRC
+if [ "$1" = "Release" ]; then
+    rc=$GIT_BRANCH_IMAGE_VERSION+git.$VIDEOSDKRC
+fi
+rc=${rc#*v}
+echo $rc
+
 # 2.拷贝app_interface源文件至android_device/samples/iot_video_demo
 mkdir android_device/samples/iot_video_demo/app_interface
 mv app_interface/curl_inc/*            android_device/samples/iot_video_demo/app_interface
@@ -20,6 +29,8 @@ mv app_interface/app_p2p/*             android_device/samples/iot_video_demo/app
 mv app_interface/cloud_api/*           android_device/samples/iot_video_demo/app_interface
 mv app_interface/utils/*               android_device/samples/iot_video_demo/app_interface
 rm android_device/samples/iot_video_demo/app_interface/utils_hmac.cpp
+# 2.1 更新p2p代码版本
+sed -i "s#.*VIDEOSDKVERSION.*#static const char * VIDEOSDKVERSION = \"$rc\";#g" android_device/samples/iot_video_demo/app_interface/appWrapper.h
 
 mv ../.github/file/libs/arm64-v8a/libcurl.a    android_device/lib/arm64-v8a
 mv ../.github/file/libs/armeabi-v7a/libcurl.a  android_device/lib/armeabi-v7a
