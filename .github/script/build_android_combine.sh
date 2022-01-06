@@ -62,5 +62,5 @@ mv output/arm64-v8a/libiot_video_demo.so   device_video_aar/explorer-device-vide
 mv ../android/java/*.java           device_video_aar/explorer-device-video-sdk/src/main/java/com/tencent/xnet
 mv ../android/cpp/native-lib.cpp    device_video_aar/explorer-device-video-sdk/src/main/cpp/app-native-lib.cpp
 sed -i '/\/\/xxxxxxJNI_OnLoad & JNI_OnUnload xxxxxx/, +30d' device_video_aar/explorer-device-video-sdk/src/main/cpp/app-native-lib.cpp
-mv ../app_interface/app_p2p/appWrapper.h   device_video_aar/explorer-device-video-sdk/src/main/cpp
-mv ../app_interface/app_p2p/app_log.h      device_video_aar/explorer-device-video-sdk/src/main/cpp
+mv samples/iot_video_demo/app_interface/appWrapper.h   device_video_aar/explorer-device-video-sdk/src/main/cpp
+mv samples/iot_video_demo/app_interface/app_log.h      device_video_aar/explorer-device-video-sdk/src/main/cpp
