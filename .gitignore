@@ -14,3 +14,4 @@ iot-p2p/
 *.java
 *.h
 CMakeLists*
+iot_build*
