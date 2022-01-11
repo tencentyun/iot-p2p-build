@@ -96,6 +96,10 @@ cp ../../../src/app_interface/appWrapper.h  Source/XP2P-iOS/Classes/AppWrapper.h
 #sed -i "" "s/.*VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = \"$VIDEOSDKVERSION\";/g" Source/XP2P-iOS/Classes/AppWrapper.h
 
 cp ../Release-iphoneos/libenet.a Source/XP2P-iOS/libenet.a
+cp ../Release-iphoneos/libenet.a                                  Source/XP2P-iOS/
+cp ../_deps/libevent-build/Release-iphoneos/libevent_*.a          Source/XP2P-iOS/
+cp ../_deps/mbedtls-build/library/Release-iphoneos/libmbed*.a     Source/XP2P-iOS/
+cp ../_deps/minizip-build/Release-iphoneos/libminizip.a           Source/XP2P-iOS/
 
 poddatetime=$(date '+%Y%m%d%H%M')
 echo $poddatetime
