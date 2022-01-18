@@ -52,6 +52,18 @@ jobs:
         GIT_ACCESS_TOKEN: ${{ secrets.IOT_GITHUB_ACCESS_TOKEN }}
         PROVISIONING_PASSWORD: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
     
+    - name: Compress xp2p artifacts
+      run: |
+        mkdir xp2p_artifacts
+        cp -r iot-p2p/android_device/device_video_aar/explorer-device-video-sdk/libs/ xp2p_artifacts/
+        zip -r xp2p_artifacts.zip xp2p_artifacts
+    - name: Upload .so to Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: xp2p
+        path: |
+          xp2p_artifacts.zip
+    
     - name: Update sdk version debug
       if: startsWith(github.event.ref, 'refs/heads')
       run: |
