@@ -49,7 +49,7 @@ cd build
 sed -i "s/.*VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = \"$VIDEOSDKVERSION\";/g" ../samples/windows_p2p/app_interface/app_p2p/appWrapper.h
 
 #编译enet库
-cmake  -DCMAKE_BUILD_TYPE=Release -DENET_NO_STATIC_BINARY=ON -DBUNDLE_CERTS=OFF -DWITH_DHT=OFF -DBUILD_WITH_FS=OFF -DWITH_ZIP=OFF -DENET_VERSION=lts_1.3 ..
+cmake -DCOMPILE_SYSTEM=Linux -DCMAKE_BUILD_TYPE=Release -DENET_NO_STATIC_BINARY=ON -DBUNDLE_CERTS=OFF -DWITH_DHT=OFF -DBUILD_WITH_FS=OFF -DWITH_ZIP=OFF -DENET_VERSION=lts_1.3 ..
 cmake --build . --config Release
 
 cd ../samples/windows_p2p/
