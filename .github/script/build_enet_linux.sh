@@ -20,7 +20,7 @@ git clone https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-p2p.git
 cd iot-p2p
 
 #2. 切换分支
-if [ $1 == 'Debug' ]; then
+if [ "$1" == 'Debug' ]; then
     git checkout $rb --
 else
     git checkout $rtt
@@ -29,7 +29,7 @@ fi
 #3. 获取pp版本号
 VIDEOSDKRC=$(git rev-parse --short HEAD)
 VIDEOSDKVERSION=$rb+git.$VIDEOSDKRC
-if [ $1 == 'Release' ]; then
+if [ "$1" == 'Release' ]; then
     VIDEOSDKVERSION=$rtt+git.$VIDEOSDKRC
 fi
 VIDEOSDKVERSION=${VIDEOSDKVERSION#*v}
@@ -55,6 +55,11 @@ cmake --build . --config Release
 cd ../samples/windows_p2p/
 
 #编译app_interface库
+cp ../../app_interface/app_p2p      app_interface/app_p2p
+cp ../../app_interface/cloud_api    app_interface/cloud_api
+cp ../../app_interface/curl_inc     app_interface/curl
+cp ../../app_interface/utils        app_interface/utils
+
 mkdir build
 cd build
 
@@ -68,7 +73,8 @@ mkdir xp2p_linux
 cp ../external_libs/lib/linux/x86/Release/libcurl.a          xp2p_linux/
 cp ../app_interface/app_p2p/appWrapper.h    xp2p_linux/AppWrapper.h
 cp app_interface/*.a                        xp2p_linux/
-cp ../../../build/libenet.a                 xp2p_linux/
+#cp ../../../build/libenet.a                 xp2p_linux/
+cp ../../../build/libenet-core.a            xp2p_linux/
 cp ../../../build/_deps/libevent-build/*.a  xp2p_linux/
 cp ../../../build/_deps/mbedtls-build/library/*.a       xp2p_linux/
 cp ../../../build/_deps/minizip-build/*.a               xp2p_linux/
