@@ -46,7 +46,7 @@ cd build
 #perl -i -pe "s#.*src/proc.*#\t\"src/proc/*\"\n\t\"src/app_interface/*\"#g" ../../CMakeLists.txt
 #perl -i -pe "s#.*bundle_static_library.*# #g" ../../CMakeLists.txt
 
-sed -i "s/.*VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = \"$VIDEOSDKVERSION\";/g" ../samples/windows_p2p/app_interface/app_p2p/appWrapper.h
+sed -i "s/.*VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = \"$VIDEOSDKVERSION\";/g" ../app_interface/app_p2p/appWrapper.h
 
 #编译enet库
 cmake -DCOMPILE_SYSTEM=Linux -DCMAKE_BUILD_TYPE=Release -DENET_NO_STATIC_BINARY=ON -DBUNDLE_CERTS=OFF -DWITH_DHT=OFF -DBUILD_WITH_FS=OFF -DWITH_ZIP=OFF -DENET_VERSION=lts_1.3 ..
