@@ -55,10 +55,10 @@ cmake --build . --config Release
 cd ../samples/windows_p2p/
 
 #编译app_interface库
-cp ../../app_interface/app_p2p      app_interface/app_p2p
-cp ../../app_interface/cloud_api    app_interface/cloud_api
-cp ../../app_interface/curl_inc     app_interface/curl
-cp ../../app_interface/utils        app_interface/utils
+cp -r ../../app_interface/app_p2p      app_interface/app_p2p
+cp -r ../../app_interface/cloud_api    app_interface/cloud_api
+cp -r ../../app_interface/curl_inc     app_interface/curl
+cp -r ../../app_interface/utils        app_interface/utils
 
 mkdir build
 cd build
