@@ -45,7 +45,7 @@ jobs:
         
     - name: Compress SDK Artifacts
       run: |
-        zip -r xp2p_linux.zip iot-p2p/samples/windows_p2p/build/xp2p_linux/
+        zip -r xp2p_linux.zip iot-p2p/samples/windows_p2p/p2p_sample
         
     - name: Upload LinuxSDK Library
       uses: actions/upload-artifact@v2

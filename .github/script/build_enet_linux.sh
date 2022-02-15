@@ -65,21 +65,21 @@ cd build
 
 cmake .. -DCOMPILE_SYSTEM=linux -DSYSTEM_ARCH=x86 -DCOMPILE_TYPE=Release
 cmake --build . --config Release
-ls app_interface/
+ls -l ../p2p_sample/
 #libapp_interface.a
 
-mkdir xp2p_linux
-
-cp ../external_libs/lib/linux/x86/Release/libcurl.a          xp2p_linux/
-cp ../app_interface/app_p2p/appWrapper.h    xp2p_linux/AppWrapper.h
-cp app_interface/*.a                        xp2p_linux/
-#cp ../../../build/libenet.a                 xp2p_linux/
-cp ../../../build/libenet-core.a            xp2p_linux/
-cp ../../../build/_deps/libevent-build/*.a  xp2p_linux/
-cp ../../../build/_deps/mbedtls-build/library/*.a       xp2p_linux/
-cp ../../../build/_deps/minizip-build/*.a               xp2p_linux/
-cp ../../../build/_deps/tinyxml2-build/*.a              xp2p_linux/
-cp ../../../build/_deps/zlib-build/*.a                  xp2p_linux/
+#mkdir xp2p_linux
+#
+#cp ../external_libs/lib/linux/x86/Release/libcurl.a          xp2p_linux/
+#cp ../app_interface/app_p2p/appWrapper.h    xp2p_linux/AppWrapper.h
+#cp app_interface/*.a                        xp2p_linux/
+##cp ../../../build/libenet.a                 xp2p_linux/
+#cp ../../../build/libenet-core.a            xp2p_linux/
+#cp ../../../build/_deps/libevent-build/*.a  xp2p_linux/
+#cp ../../../build/_deps/mbedtls-build/library/*.a       xp2p_linux/
+#cp ../../../build/_deps/minizip-build/*.a               xp2p_linux/
+#cp ../../../build/_deps/tinyxml2-build/*.a              xp2p_linux/
+#cp ../../../build/_deps/zlib-build/*.a                  xp2p_linux/
 
 poddatetime=$(date '+%Y%m%d%H%M')
 echo $poddatetime
