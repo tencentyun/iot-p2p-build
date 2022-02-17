@@ -1,5 +1,3 @@
-call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
-
 set rtt=%2
 
 for /F %%i in ('git rev-parse --short HEAD') do ( set commitid=%%i)
@@ -43,6 +41,7 @@ echo %VIDEO_SDK_VERSION%
 
 mkdir build
 cd build
+call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
 cmake -DCMAKE_BUILD_TYPE=Release -DENET_NO_STATIC_BINARY=ON -DWITH_DHT=OFF -DBUILD_WITH_FS=OFF -DWITH_ZIP=OFF -DENET_VERSION=lts_1.3  -G"Visual Studio 16 2019" -Tv142 -AWin32 ..
 cmake --build . --config Release
 
