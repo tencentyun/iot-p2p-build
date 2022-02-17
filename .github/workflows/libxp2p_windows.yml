@@ -15,27 +15,27 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Setup cmake
-      uses: jwlawson/actions-setup-cmake@v1.8
-      with:
-        cmake-version: '3.16.0'
+    # - name: Setup cmake
+    #   uses: jwlawson/actions-setup-cmake@v1.8
+    #   with:
+    #     cmake-version: '3.16.0'
     - name: Use cmake
       run: echo +++++$(cmake --version)
 
-    - name: RC.exe
-      run: |
-        function Invoke-VSDevEnvironment {
-            $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
-            $installationPath = & $vswhere -prerelease -legacy -latest -property installationPath
-            $Command = Join-Path $installationPath "Common7\Tools\vsdevcmd.bat"
-          & "${env:COMSPEC}" /s /c "`"$Command`" -no_logo && set" | Foreach-Object {
-                if ($_ -match '^([^=]+)=(.*)') {
-                    [System.Environment]::SetEnvironmentVariable($matches[1], $matches[2])
-                }
-            }
-        }
-        Invoke-VSDevEnvironment
-        Get-Command rc.exe | Format-Table -AutoSize
+    # - name: RC.exe
+    #   run: |
+    #     function Invoke-VSDevEnvironment {
+    #         $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+    #         $installationPath = & $vswhere -prerelease -legacy -latest -property installationPath
+    #         $Command = Join-Path $installationPath "Common7\Tools\vsdevcmd.bat"
+    #       & "${env:COMSPEC}" /s /c "`"$Command`" -no_logo && set" | Foreach-Object {
+    #             if ($_ -match '^([^=]+)=(.*)') {
+    #                 [System.Environment]::SetEnvironmentVariable($matches[1], $matches[2])
+    #             }
+    #         }
+    #     }
+    #     Invoke-VSDevEnvironment
+    #     Get-Command rc.exe | Format-Table -AutoSize
       
     - name: debug build libenet
       if: startsWith(github.event.ref, 'refs/heads')
