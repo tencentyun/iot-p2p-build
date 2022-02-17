@@ -39,7 +39,7 @@ mkdir -p build
 cd build
 sed -i "s/.*VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = \"$VIDEOSDKVERSION\";/g" ../app_interface/app_p2p/appWrapper.h
 
-cmake -DCOMPILE_SYSTEM=Windows -DCMAKE_BUILD_TYPE=Release -DENET_NO_STATIC_BINARY=ON -DBUNDLE_CERTS=OFF -DWITH_DHT=OFF -DBUILD_WITH_FS=OFF -DWITH_ZIP=OFF -DENABLE_TCP_PUNCH=ON -DENET_VERSION=lts_1.3 ..
+cmake -DCOMPILE_SYSTEM=windows -DSYSTEM_ARCH=x86 -DCOMPILE_TYPE=Release -G"Visual Studio 16 2019" -Tv142 -AWin32 -DENET_NO_STATIC_BINARY=ON -DBUNDLE_CERTS=OFF -DWITH_DHT=OFF -DBUILD_WITH_FS=OFF -DWITH_ZIP=OFF -DENABLE_TCP_PUNCH=ON -DENET_VERSION=lts_1.3 ..
 cmake --build . --config Release
 
 cd ../samples/windows_p2p/
