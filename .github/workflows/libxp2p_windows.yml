@@ -22,22 +22,26 @@ jobs:
     - name: Use cmake
       run: echo +++++$(cmake --version)
       
-    - name: build libenet
+    - name: debug build libenet
       if: startsWith(github.event.ref, 'refs/heads')
       run: |
-        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-        export GIT_BRANCH_IMAGE_VERSION=$VERSION
-        sh .github/script/build_enet_windows.sh Debug
+        $branch="${{ github.ref }}"
+        $branch=$branch.Split("/")[2]
+        echo $branch
+        .\.github\script\build_enet_windows.cmd Debug $branch
+      shell: pwsh
       env:
         GIT_ACCESS_TOKEN: ${{ secrets.IOT_GITHUB_ACCESS_TOKEN }}
         PROVISIONING_PASSWORD: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
 
-    - name: push libenet
+    - name: release build libenet
       if: startsWith(github.event.ref, 'refs/tags')
       run: |
-        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-        export GIT_BRANCH_IMAGE_VERSION=$VERSION
-        sh .github/script/build_enet_windows.sh Release
+        $branch="${{ github.ref }}"
+        $branch=$branch.Split("/")[2]
+        echo $branch
+        sh .github/script/build_enet_windows.cmd Release $branch
+      shell: pwsh
       env:
         GIT_ACCESS_TOKEN: ${{ secrets.IOT_GITHUB_ACCESS_TOKEN }}
         PROVISIONING_PASSWORD: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
