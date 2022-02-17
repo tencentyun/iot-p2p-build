@@ -39,6 +39,8 @@ if  %1==Release (
 set VIDEO_SDK_VERSION=%VIDEO_SDK_VERSION:~1%
 echo %VIDEO_SDK_VERSION%
 
+echo "::add-path::C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x64"
+
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release -DENET_NO_STATIC_BINARY=ON -DWITH_DHT=OFF -DBUILD_WITH_FS=OFF -DWITH_ZIP=OFF -DENET_VERSION=lts_1.3  -G"Visual Studio 16 2019" -Tv142 -AWin32 ..
