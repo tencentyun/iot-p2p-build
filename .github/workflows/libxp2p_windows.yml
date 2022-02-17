@@ -15,10 +15,10 @@ jobs:
       with:
         fetch-depth: 0
 
-    # - name: Setup cmake
-    #   uses: jwlawson/actions-setup-cmake@v1.8
-    #   with:
-    #     cmake-version: '3.16.0'
+    - name: Setup cmake
+      uses: jwlawson/actions-setup-cmake@v1.8
+      with:
+        cmake-version: '3.16.0'
     - name: Use cmake
       run: echo +++++$(cmake --version)
 
