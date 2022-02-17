@@ -1,4 +1,4 @@
-set PATH=%PATH%;C:\Program Files (x86)\Windows Kits\10\bin\10.0.22000.0\x86
+set PATH=C:\Program Files (x86)\Windows Kits\10\bin\10.0.22000.0\x86\;%PATH%;
 
 set rtt=%2
 
@@ -40,8 +40,6 @@ if  %1==Release (
 )
 set VIDEO_SDK_VERSION=%VIDEO_SDK_VERSION:~1%
 echo %VIDEO_SDK_VERSION%
-
-echo "::add-path::C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x64"
 
 mkdir build
 cd build
