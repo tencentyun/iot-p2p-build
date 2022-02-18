@@ -50,17 +50,17 @@ echo ================end-1======================
 cmake --build . --config Release
 echo ================end-2======================
 
-@REM cd ../samples/windows_p2p/
+cd ../samples/windows_p2p/
 
-@REM cp -r ../../app_interface/app_p2p      app_interface/app_p2p
-@REM cp -r ../../app_interface/cloud_api    app_interface/cloud_api
-@REM cp -r ../../app_interface/curl_inc     app_interface/curl
-@REM cp -r ../../app_interface/utils        app_interface/utils
+cp -r ../../app_interface/app_p2p      app_interface/app_p2p
+cp -r ../../app_interface/cloud_api    app_interface/cloud_api
+cp -r ../../app_interface/curl_inc     app_interface/curl
+cp -r ../../app_interface/utils        app_interface/utils
 
-@REM mkdir build
-@REM cd build
+mkdir build
+cd build
 
-@REM cmake .. -DCOMPILE_SYSTEM=windows -DSYSTEM_ARCH=x86 -DCOMPILE_TYPE=Release -DCMAKE_BUILD_TYPE=Release  -G"Visual Studio 16 2019" -Tv142 -AWin32 ..
-@REM cmake --build . --config Release
+cmake .. -DCOMPILE_SYSTEM=windows -DSYSTEM_ARCH=x86 -DCOMPILE_TYPE=Release -DCMAKE_BUILD_TYPE=Release  -G"Visual Studio 16 2019" -Tv142 -AWin32 ..
+cmake --build . --config Release
 
 ls -l ../p2p_sample/
