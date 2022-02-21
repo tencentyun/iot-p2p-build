@@ -58,10 +58,10 @@ echo ================end-2======================
 cd ../iot/link/pc_app
 
 #编译app_interface库
-cp -r ../link/app_common/app_p2p      app_interface/app_p2p
-cp -r ../link/app_common/cloud_api    app_interface/cloud_api
-cp -r ../link/app_common/curl_inc     app_interface/curl
-cp -r ../link/app_common/utils        app_interface/utils
+cp -r ../app_common/app_p2p      app_interface/app_p2p
+cp -r ../app_common/cloud_api    app_interface/cloud_api
+cp -r ../app_common/curl_inc     app_interface/curl
+cp -r ../app_common/utils        app_interface/utils
 
 mkdir build
 cd build
