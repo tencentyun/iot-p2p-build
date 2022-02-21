@@ -49,16 +49,16 @@ perl -i -pe "s#.*bundle_static_library.*# #g" ../../CMakeLists.txt
 
 cp ../../../.github/file/libcurl.a        ../../app_interface/libcurl.a
 
-mv ../../app_interface/curl_inc/*      ../../app_interface
-mv ../../app_interface/app_p2p/*    ../../app_interface
-mv ../../app_interface/cloud_api/*   ../../app_interface
-mv ../../app_interface/utils/*           ../../app_interface
+mv ../../iot/link/app_common/curl_inc/*      ../../app_interface
+mv ../../iot/link/app_common/app_p2p/*    ../../app_interface
+mv ../../iot/link/app_common/cloud_api/*   ../../app_interface
+mv ../../iot/link/app_common/utils/*           ../../app_interface
 
-rm -rf ../../app_interface/utils
-rm -rf ../../app_interface/cloud_api
-rm -rf ../../app_interface/app_p2p
-rm -rf ../../app_interface/curl_inc
-rm -rf ../../app_interface/readme.md
+#rm -rf ../../app_interface/utils
+#rm -rf ../../app_interface/cloud_api
+#rm -rf ../../app_interface/app_p2p
+#rm -rf ../../app_interface/curl_inc
+#rm -rf ../../app_interface/readme.md
 
 mv ../../app_interface/   ../../src/app_interface/
 
