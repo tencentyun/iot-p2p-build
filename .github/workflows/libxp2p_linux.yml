@@ -45,7 +45,7 @@ jobs:
         
     - name: Compress SDK Artifacts
       run: |
-        zip -r xp2p_linux.zip iot-p2p/samples/windows_p2p/p2p_sample
+        zip -r xp2p_linux.zip iot-p2p/iot/link/pc_app/p2p_sample
         
     - name: Upload LinuxSDK Library
       if: startsWith(github.event.ref, 'refs/heads')
