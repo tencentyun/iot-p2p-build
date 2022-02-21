@@ -23,7 +23,7 @@ rc=${rc#*v}
 echo $rc
 
 # 2.拷贝app_interface源文件至android_device/samples/iot_video_demo
-mkdir android_device/samples/iot_video_demo/app_interface
+mkdir iot/link/android_combine/android_device/samples/iot_video_demo/app_interface
 mv iot/link/app_common/curl_inc/*            iot/link/android_combine/android_device/samples/iot_video_demo/app_interface
 mv iot/link/app_common/app_p2p/*             iot/link/android_combine/android_device/samples/iot_video_demo/app_interface
 mv iot/link/app_common/cloud_api/*           iot/link/android_combine/android_device/samples/iot_video_demo/app_interface
