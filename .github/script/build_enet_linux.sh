@@ -52,13 +52,13 @@ sed -i "s/.*VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = \"$VIDEOSDKV
 cmake -DCOMPILE_SYSTEM=Linux -DCMAKE_BUILD_TYPE=Release -DENET_NO_STATIC_BINARY=ON -DBUNDLE_CERTS=OFF -DWITH_DHT=OFF -DBUILD_WITH_FS=OFF -DWITH_ZIP=OFF -DENABLE_TCP_PUNCH=ON -DENET_VERSION=lts_1.3 ..
 cmake --build . --config Release
 
-cd ../samples/windows_p2p/
+cd ../iot/link/pc_app
 
 #编译app_interface库
-cp -r ../../iot/link/app_common/app_p2p      app_interface/app_p2p
-cp -r ../../iot/link/app_common/cloud_api    app_interface/cloud_api
-cp -r ../../iot/link/app_common/curl_inc     app_interface/curl
-cp -r ../../iot/link/app_common/utils        app_interface/utils
+cp -r ../link/app_common/app_p2p      app_interface/app_p2p
+cp -r ../link/app_common/cloud_api    app_interface/cloud_api
+cp -r ../link/app_common/curl_inc     app_interface/curl
+cp -r ../link/app_common/utils        app_interface/utils
 
 mkdir build
 cd build
@@ -66,20 +66,6 @@ cd build
 cmake .. -DCOMPILE_SYSTEM=linux -DSYSTEM_ARCH=x86 -DCOMPILE_TYPE=Release
 cmake --build . --config Release
 ls -l ../p2p_sample/
-#libapp_interface.a
-
-#mkdir xp2p_linux
-#
-#cp ../external_libs/lib/linux/x86/Release/libcurl.a          xp2p_linux/
-#cp ../app_interface/app_p2p/appWrapper.h    xp2p_linux/AppWrapper.h
-#cp app_interface/*.a                        xp2p_linux/
-##cp ../../../build/libenet.a                 xp2p_linux/
-#cp ../../../build/libenet-core.a            xp2p_linux/
-#cp ../../../build/_deps/libevent-build/*.a  xp2p_linux/
-#cp ../../../build/_deps/mbedtls-build/library/*.a       xp2p_linux/
-#cp ../../../build/_deps/minizip-build/*.a               xp2p_linux/
-#cp ../../../build/_deps/tinyxml2-build/*.a              xp2p_linux/
-#cp ../../../build/_deps/zlib-build/*.a                  xp2p_linux/
 
 poddatetime=$(date '+%Y%m%d%H%M')
 echo $poddatetime

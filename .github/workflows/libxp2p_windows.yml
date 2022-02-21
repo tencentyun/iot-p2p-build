@@ -64,7 +64,7 @@ jobs:
         
     - name: Compress SDK Artifacts
       run: |
-        tar.exe -a -c -f xp2p_windows.zip iot-p2p/samples/windows_p2p/p2p_sample
+        tar.exe -a -c -f xp2p_windows.zip iot-p2p/iot/link/pc_app/p2p_sample
         
     - name: Upload Windows SDK Library
       uses: actions/upload-artifact@v2

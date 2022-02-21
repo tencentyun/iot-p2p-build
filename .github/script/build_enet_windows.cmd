@@ -55,12 +55,13 @@ echo ================end-1======================
 cmake --build . --config Release
 echo ================end-2======================
 
-cd ../samples/windows_p2p/
+cd ../iot/link/pc_app
 
-cp -r ../../iot/link/app_common/app_p2p      app_interface/app_p2p
-cp -r ../../iot/link/app_common/cloud_api    app_interface/cloud_api
-cp -r ../../iot/link/app_common/curl_inc     app_interface/curl
-cp -r ../../iot/link/app_common/utils        app_interface/utils
+#编译app_interface库
+cp -r ../link/app_common/app_p2p      app_interface/app_p2p
+cp -r ../link/app_common/cloud_api    app_interface/cloud_api
+cp -r ../link/app_common/curl_inc     app_interface/curl
+cp -r ../link/app_common/utils        app_interface/utils
 
 mkdir build
 cd build

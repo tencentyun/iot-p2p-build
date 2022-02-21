@@ -93,6 +93,6 @@ jobs:
     
     - name: Publish aar to Maven
       run: |
-        chmod -R 777 iot-p2p/iot/link/android_combine/android_device/device_video_aar/
+        chmod -R 777 iot-p2p/iot/device/android_device/device_video_aar/
         cd iot-p2p/iot/device/android_device/device_video_aar/
         ./gradlew publish
