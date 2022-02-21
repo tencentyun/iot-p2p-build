@@ -55,7 +55,7 @@ jobs:
         $branch="${{ github.ref }}"
         $branch=$branch.Split("/")[2]
         echo $branch
-        sh .github/script/build_enet_windows.cmd Release $branch
+        .\.github\script\build_enet_windows.cmd Release $branch
       shell: pwsh
       env:
         GIT_ACCESS_TOKEN: ${{ secrets.IOT_GITHUB_ACCESS_TOKEN }}
