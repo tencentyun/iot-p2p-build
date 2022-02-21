@@ -47,13 +47,15 @@ jobs:
       run: |
         zip -r xp2p_linux.zip iot-p2p/samples/windows_p2p/p2p_sample
         
-#    - name: Upload LinuxSDK Library
-#      uses: actions/upload-artifact@v2
-#      with:
-#        name: xp2p_linux_lib.zip
-#        path: xp2p_linux.zip
+    - name: Upload LinuxSDK Library
+      if: startsWith(github.event.ref, 'refs/heads')
+      uses: actions/upload-artifact@v2
+      with:
+        name: xp2p_linux_lib.zip
+        path: xp2p_linux.zip
         
     - name: video Upload Asset
+      if: startsWith(github.event.ref, 'refs/tags')
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ github.event.release.upload_url }}
