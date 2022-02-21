@@ -23,18 +23,18 @@ rc=${rc#*v}
 echo $rc
 
 # 2.拷贝app_interface源文件至android_device/samples/iot_video_demo
-mkdir iot/link/android_combine/android_device/samples/iot_video_demo/app_interface
-mv iot/link/app_common/curl_inc/*            iot/link/android_combine/android_device/samples/iot_video_demo/app_interface
-mv iot/link/app_common/app_p2p/*             iot/link/android_combine/android_device/samples/iot_video_demo/app_interface
-mv iot/link/app_common/cloud_api/*           iot/link/android_combine/android_device/samples/iot_video_demo/app_interface
-mv iot/link/app_common/utils/*               iot/link/android_combine/android_device/samples/iot_video_demo/app_interface
-rm iot/link/android_combine/android_device/samples/iot_video_demo/app_interface/utils_hmac.cpp
+mkdir iot/device/android_device/samples/iot_video_demo/app_interface
+mv iot/link/app_common/curl_inc/*            iot/device/android_device/samples/iot_video_demo/app_interface
+mv iot/link/app_common/app_p2p/*             iot/device/android_device/samples/iot_video_demo/app_interface
+mv iot/link/app_common/cloud_api/*           iot/device/android_device/samples/iot_video_demo/app_interface
+mv iot/link/app_common/utils/*               iot/device/android_device/samples/iot_video_demo/app_interface
+rm iot/device/android_device/samples/iot_video_demo/app_interface/utils_hmac.cpp
 
 # 2.1 更新p2p代码版本
-sed -i "s#.*VIDEOSDKVERSION.*#static const char * VIDEOSDKVERSION = \"$rc\";#g" iot/link/android_combine/android_device/samples/iot_video_demo/app_interface/appWrapper.h
+sed -i "s#.*VIDEOSDKVERSION.*#static const char * VIDEOSDKVERSION = \"$rc\";#g" iot/device/android_device/samples/iot_video_demo/app_interface/appWrapper.h
 
-mv ../.github/file/libs/arm64-v8a/libcurl.a    iot/link/android_combine/android_device/lib/arm64-v8a
-mv ../.github/file/libs/armeabi-v7a/libcurl.a  iot/link/android_combine/android_device/lib/armeabi-v7a
+mv ../.github/file/libs/arm64-v8a/libcurl.a    iot/device/android_device/lib/arm64-v8a
+mv ../.github/file/libs/armeabi-v7a/libcurl.a  iot/device/android_device/lib/armeabi-v7a
 
 # 3.编译iot_video_demo.so
 mkdir -p build/android_arm64
@@ -49,19 +49,19 @@ cmake ../.. -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/16.1.4479499/b
 make all -j8
 
 cd ../../
-mv build/android_arm64/libenet.a                         iot/link/android_combine/android_device/lib/arm64-v8a
-mv build/android_arm64/_deps/libevent-build/*.a          iot/link/android_combine/android_device/lib/arm64-v8a
-mv build/android_arm64/_deps/mbedtls-build/library/*.a   iot/link/android_combine/android_device/lib/arm64-v8a
-mv build/android_arm64/_deps/minizip-build/*.a           iot/link/android_combine/android_device/lib/arm64-v8a
-mv build/android_arm64/_deps/tinyxml2-build/*.a          iot/link/android_combine/android_device/lib/arm64-v8a
+mv build/android_arm64/libenet.a                         iot/device/android_device/lib/arm64-v8a
+mv build/android_arm64/_deps/libevent-build/*.a          iot/device/android_device/lib/arm64-v8a
+mv build/android_arm64/_deps/mbedtls-build/library/*.a   iot/device/android_device/lib/arm64-v8a
+mv build/android_arm64/_deps/minizip-build/*.a           iot/device/android_device/lib/arm64-v8a
+mv build/android_arm64/_deps/tinyxml2-build/*.a          iot/device/android_device/lib/arm64-v8a
 
-mv build/android_armv7/libenet.a                         iot/link/android_combine/android_device/lib/armeabi-v7a
-mv build/android_armv7/_deps/libevent-build/*.a          iot/link/android_combine/android_device/lib/armeabi-v7a
-mv build/android_armv7/_deps/mbedtls-build/library/*.a   iot/link/android_combine/android_device/lib/armeabi-v7a
-mv build/android_armv7/_deps/minizip-build/*.a           iot/link/android_combine/android_device/lib/armeabi-v7a
-mv build/android_armv7/_deps/tinyxml2-build/*.a          iot/link/android_combine/android_device/lib/armeabi-v7a
+mv build/android_armv7/libenet.a                         iot/device/android_device/lib/armeabi-v7a
+mv build/android_armv7/_deps/libevent-build/*.a          iot/device/android_device/lib/armeabi-v7a
+mv build/android_armv7/_deps/mbedtls-build/library/*.a   iot/device/android_device/lib/armeabi-v7a
+mv build/android_armv7/_deps/minizip-build/*.a           iot/device/android_device/lib/armeabi-v7a
+mv build/android_armv7/_deps/tinyxml2-build/*.a          iot/device/android_device/lib/armeabi-v7a
 
-cd iot/link/android_combine/android_device
+cd iot/device/android_device
 ./cmake_build.sh ANDROID
 
 ls -l output/arm64-v8a/
@@ -71,8 +71,8 @@ mv output/armeabi-v7a/libiot_video_demo.so   device_video_aar/explorer-device-vi
 mv output/arm64-v8a/libiot_video_demo.so   device_video_aar/explorer-device-video-sdk/libs/arm64-v8a
 
 # 4.构建打包aar所需要的app头文件以及native-lib.cpp文件
-mv ../android_app/java/*.java           device_video_aar/explorer-device-video-sdk/src/main/java/com/tencent/xnet
-mv ../android_app/cpp/native-lib.cpp    device_video_aar/explorer-device-video-sdk/src/main/cpp/app-native-lib.cpp
+mv ../../link/android_app/java/*.java           device_video_aar/explorer-device-video-sdk/src/main/java/com/tencent/xnet
+mv ../../link/android_app/cpp/native-lib.cpp    device_video_aar/explorer-device-video-sdk/src/main/cpp/app-native-lib.cpp
 sed -i '/\/\/xxxxxxJNI_OnLoad & JNI_OnUnload xxxxxx/, +30d' device_video_aar/explorer-device-video-sdk/src/main/cpp/app-native-lib.cpp
 mv samples/iot_video_demo/app_interface/appWrapper.h   device_video_aar/explorer-device-video-sdk/src/main/cpp
 mv samples/iot_video_demo/app_interface/app_log.h      device_video_aar/explorer-device-video-sdk/src/main/cpp
