@@ -20,7 +20,7 @@ git clone https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-p2p.git
 cd iot-p2p
 
 #2. 切换分支
-if [ "$1" == 'Debug' ]; then
+if [ "$1" = 'Debug' ]; then
     git checkout $rb --
 else
     git checkout $rtt
@@ -29,7 +29,7 @@ fi
 #3. 获取pp版本号
 VIDEOSDKRC=$(git rev-parse --short HEAD)
 VIDEOSDKVERSION=$rb+git.$VIDEOSDKRC
-if [ "$1" == 'Release' ]; then
+if [ "$1" = 'Release' ]; then
     VIDEOSDKVERSION=$rtt+git.$VIDEOSDKRC
 fi
 VIDEOSDKVERSION=${VIDEOSDKVERSION#*v}

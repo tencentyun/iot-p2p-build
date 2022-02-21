@@ -54,11 +54,28 @@ jobs:
         name: xp2p_linux_lib.zip
         path: xp2p_linux.zip
         
+        
+    - name: Create Release
+      id: create_release
+      if: startsWith(github.event.ref, 'refs/tags')
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: |
+            this is a auto beta release
+            - First Change
+            - Second Change
+        draft: false
+        prerelease: true
+          
     - name: video Upload Asset
       if: startsWith(github.event.ref, 'refs/tags')
       uses: actions/upload-release-asset@v1
       with:
-        upload_url: ${{ github.event.release.upload_url }}
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: xp2p_linux.zip
         asset_name: xp2p_linux.zip
         asset_content_type: application/zip
