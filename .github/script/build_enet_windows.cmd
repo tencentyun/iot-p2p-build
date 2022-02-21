@@ -43,6 +43,11 @@ echo %VIDEO_SDK_VERSION%
 
 mkdir build
 cd build
+
+set sed="C:\Program Files\Git\usr\bin\sed.exe"
+
+%sed% -i "s/.*VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = \"$VIDEOSDKVERSION\";/g" ../iot/link/app_common/app_p2p/appWrapper.h
+
 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
 cmake -DCMAKE_BUILD_TYPE=Release -DENET_NO_STATIC_BINARY=ON -DWITH_DHT=OFF -DBUILD_WITH_FS=OFF -DWITH_ZIP=OFF -DENET_VERSION=lts_1.3  -G"Visual Studio 16 2019" -Tv142 -AWin32 ..
