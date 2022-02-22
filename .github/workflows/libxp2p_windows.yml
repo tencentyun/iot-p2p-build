@@ -67,7 +67,18 @@ jobs:
         tar.exe -a -c -f xp2p_windows.zip iot-p2p/iot/link/pc_app/p2p_sample
         
     - name: Upload Windows SDK Library
+      if: startsWith(github.event.ref, 'refs/heads')
       uses: actions/upload-artifact@v2
       with:
         name: xp2p_windows_lib
         path: xp2p_windows.zip
+
+    - name: Upload binaries to release
+      if: startsWith(github.event.ref, 'refs/tags')
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: xp2p_windows.zip
+        asset_name: xp2p_windows.zip
+        tag: ${{ github.ref }}
+        overwrite: true
