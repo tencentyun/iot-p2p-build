@@ -46,7 +46,7 @@ cd build
 
 set sed="C:\Program Files\Git\usr\bin\sed.exe"
 
-%sed% -i "s/.*VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = \"%VIDEOSDKVERSION%\";/g" ../iot/link/app_common/app_p2p/appWrapper.h
+%sed% -i "s/.*VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = \"%VIDEO_SDK_VERSION%\";/g" ../iot/link/app_common/app_p2p/appWrapper.h
 
 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
