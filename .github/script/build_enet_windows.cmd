@@ -1,5 +1,9 @@
-set PATH=%PATH%;C:\Program Files (x86)\Windows Kits\10\bin\10.0.22000.0\x86
-
+#set PATH=%PATH%;C:\Program Files (x86)\Windows Kits\10\bin\10.0.22000.0\x86
+dir "C:\Program Files (x86)\Microsoft Visual Studio"
+dir "C:\Program Files (x86)\Microsoft Visual Studio\2019"
+dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise"
+dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools"
+dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build"
 set rtt=%2
 
 for /F %%i in ('git rev-parse --short HEAD') do ( set commitid=%%i)
