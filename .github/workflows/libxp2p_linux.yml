@@ -50,7 +50,7 @@ jobs:
         
     - name: Upload LinuxSDK Library
       if: startsWith(github.event.ref, 'refs/heads')
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: xp2p_linux_lib.zip
         path: xp2p_linux.zip
