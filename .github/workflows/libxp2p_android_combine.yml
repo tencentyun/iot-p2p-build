@@ -58,7 +58,7 @@ jobs:
         cp -r iot-p2p/iot/device/android_device/device_video_aar/explorer-device-video-sdk/libs/ xp2p_artifacts/
         zip -r xp2p_artifacts.zip xp2p_artifacts
     - name: Upload .so to Artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: xp2p
         path: |
