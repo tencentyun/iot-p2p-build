@@ -30,7 +30,7 @@ jobs:
       run: echo +++++$(cmake --version)
       
     - name: Setup NDK
-      run: echo "y" | sudo ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --install "ndk;16.1.4479499"
+      run: echo "y" | sudo ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --install "ndk;25.1.8937393"
       
         
     - name: build libenet debug
@@ -55,7 +55,7 @@ jobs:
     - name: Compress xp2p artifacts
       run: |
         mkdir xp2p_artifacts
-        cp -r iot-p2p/iot/device/android_device/device_video_aar/explorer-device-video-sdk/libs/ xp2p_artifacts/
+        cp -r iot-p2p/iot/device/android_device/device_video_aar/explorer-app-video-sdk/libs/ xp2p_artifacts/
         zip -r xp2p_artifacts.zip xp2p_artifacts
     - name: Upload .so to Artifacts
       uses: actions/upload-artifact@v4
@@ -69,14 +69,14 @@ jobs:
       run: |
         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
         export GIT_BRANCH_IMAGE_VERSION=$VERSION
-        bash .github/script/update_version_for_android.sh Debug iot-p2p/iot/device/android_device/device_video_aar/explorer-device-video-sdk/build.gradle
+        bash .github/script/update_version_for_android.sh Debug iot-p2p/iot/device/android_device/device_video_aar/explorer-app-video-sdk/build.gradle
         
     - name: Update sdk version release
       if: startsWith(github.event.ref, 'refs/tags')
       run: |
         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
         export GIT_BRANCH_IMAGE_VERSION=$VERSION
-        bash .github/script/update_version_for_android.sh Release iot-p2p/iot/device/android_device/device_video_aar/explorer-device-video-sdk/build.gradle
+        bash .github/script/update_version_for_android.sh Release iot-p2p/iot/device/android_device/device_video_aar/explorer-app-video-sdk/build.gradle
 
     - name: Update Values of Signing
       run: |
