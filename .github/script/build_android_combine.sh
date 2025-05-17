@@ -67,12 +67,10 @@ cd iot/device/android_device
 ls -l output/arm64-v8a/
 ls -l output/armeabi-v7a/
 
-mv output/armeabi-v7a/libiot_video_demo.so   device_video_aar/explorer-device-video-sdk/libs/armeabi-v7a
-mv output/arm64-v8a/libiot_video_demo.so   device_video_aar/explorer-device-video-sdk/libs/arm64-v8a
+#编译app xp2p sdk
+mv output/armeabi-v7a/libiot_video_demo.so   device_video_aar/explorer-app-video-sdk/libs/armeabi-v7a
+mv output/arm64-v8a/libiot_video_demo.so   device_video_aar/explorer-app-video-sdk/libs/arm64-v8a
 
 # 4.构建打包aar所需要的app头文件以及native-lib.cpp文件
-mv ../../link/android_app/java/*.java           device_video_aar/explorer-device-video-sdk/src/main/java/com/tencent/xnet
-mv ../../link/android_app/cpp/native-lib.cpp    device_video_aar/explorer-device-video-sdk/src/main/cpp/app-native-lib.cpp
-sed -i '/\/\/xxxxxxJNI_OnLoad & JNI_OnUnload xxxxxx/, +30d' device_video_aar/explorer-device-video-sdk/src/main/cpp/app-native-lib.cpp
-mv samples/iot_video_demo/app_interface/appWrapper.h   device_video_aar/explorer-device-video-sdk/src/main/cpp
-mv samples/iot_video_demo/app_interface/app_log.h      device_video_aar/explorer-device-video-sdk/src/main/cpp
+mv samples/iot_video_demo/app_interface/appWrapper.h   device_video_aar/explorer-app-video-sdk/src/main/cpp
+mv samples/iot_video_demo/app_interface/app_log.h      device_video_aar/explorer-app-video-sdk/src/main/cpp
