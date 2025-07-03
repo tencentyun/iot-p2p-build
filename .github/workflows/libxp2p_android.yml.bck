@@ -115,4 +115,4 @@ jobs:
     - name: Publish aar to Maven
       run: |
         cd iot-p2p/samples/android
-        ./gradlew publish
+        ./gradlew publishToMavenCentral
