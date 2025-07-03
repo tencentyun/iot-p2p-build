@@ -95,4 +95,4 @@ jobs:
       run: |
         chmod -R 777 iot-p2p/iot/device/android_device/device_video_aar/
         cd iot-p2p/iot/device/android_device/device_video_aar/
-        ./gradlew publish
+        ./gradlew publishToMavenCentral
