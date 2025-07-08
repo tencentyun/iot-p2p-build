@@ -35,10 +35,12 @@ jobs:
         cmake-version: '3.22.0'
     - name: Use cmake
       run: echo +++++$(cmake --version)
-      
+
     - name: Setup NDK
       run: echo "y" | sudo ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --install "ndk;25.1.8937393"
-      
+
+    - name: Install build tools
+      run: sudo apt-get update && sudo apt-get install -y ninja-build
         
     - name: build libenet debug
       if: startsWith(github.event.ref, 'refs/heads')
