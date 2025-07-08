@@ -39,14 +39,14 @@ mv ../.github/file/libs/armeabi-v7a/libcurl.a  iot/device/android_device/lib/arm
 # 3.编译iot_video_demo.so
 mkdir -p build/android_arm64
 cd build/android_arm64
-cmake ../.. -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/25.1.8937393/build/cmake/android.toolchain.cmake  -DANDROID_NDK=/usr/local/lib/android/sdk/ndk/25.1.8937393  -DCMAKE_BUILD_TYPE=Release  -DANDROID_ABI=arm64-v8a  -DANDROID_PLATFORM=android-21 -DANDROID_STL=c++_shared
-make all -j8
+cmake ../.. -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/25.1.8937393/build/cmake/android.toolchain.cmake  -DANDROID_NDK=/usr/local/lib/android/sdk/ndk/25.1.8937393  -DCMAKE_BUILD_TYPE=Release  -DANDROID_ABI=arm64-v8a  -DANDROID_PLATFORM=android-21 -DANDROID_STL=c++_shared  -DCMAKE_MAKE_PROGRAM=/usr/bin/ninja  -G Ninja
+ninja -j8
 
 cd ../../
 mkdir -p build/android_armv7
 cd build/android_armv7
-cmake ../.. -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/25.1.8937393/build/cmake/android.toolchain.cmake  -DANDROID_NDK=/usr/local/lib/android/sdk/ndk/25.1.8937393  -DCMAKE_BUILD_TYPE=Release  -DANDROID_ABI=armeabi-v7a  -DANDROID_PLATFORM=android-21 -DANDROID_STL=c++_shared
-make all -j8
+cmake ../.. -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/25.1.8937393/build/cmake/android.toolchain.cmake  -DANDROID_NDK=/usr/local/lib/android/sdk/ndk/25.1.8937393  -DCMAKE_BUILD_TYPE=Release  -DANDROID_ABI=armeabi-v7a  -DANDROID_PLATFORM=android-21 -DANDROID_STL=c++_shared -DCMAKE_MAKE_PROGRAM=/usr/bin/ninja  -G Ninja
+ninja -j8
 
 cd ../../
 mv build/android_arm64/libenet.a                         iot/device/android_device/lib/arm64-v8a

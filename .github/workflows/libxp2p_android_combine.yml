@@ -32,7 +32,7 @@ jobs:
     - name: Setup cmake
       uses: jwlawson/actions-setup-cmake@v1.8
       with:
-        cmake-version: '3.17.0'
+        cmake-version: '3.22.0'
     - name: Use cmake
       run: echo +++++$(cmake --version)
       
