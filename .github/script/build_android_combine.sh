@@ -46,13 +46,9 @@ cd build/android_arm64
 cmake ../.. \
   -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/25.1.8937393/build/cmake/android.toolchain.cmake \
   -DANDROID_NDK=/usr/local/lib/android/sdk/ndk/25.1.8937393 \
-  -DCMAKE_BUILD_TYPE=Release \
   -DANDROID_ABI=arm64-v8a \
   -DANDROID_PLATFORM=android-21 \
   -DANDROID_STL=c++_shared \
-  -DCMAKE_MAKE_PROGRAM=$(which ninja) \
-  -DCMAKE_C_COMPILER=/usr/local/lib/android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android21-clang \
-  -DCMAKE_CXX_COMPILER=/usr/local/lib/android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android21-clang++ \
   -G Ninja
 ninja -j8
 
@@ -62,13 +58,9 @@ cd build/android_armv7
 cmake ../.. \
   -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/25.1.8937393/build/cmake/android.toolchain.cmake \
   -DANDROID_NDK=/usr/local/lib/android/sdk/ndk/25.1.8937393 \
-  -DCMAKE_BUILD_TYPE=Release \
   -DANDROID_ABI=armeabi-v7a \
   -DANDROID_PLATFORM=android-21 \
   -DANDROID_STL=c++_shared \
-  -DCMAKE_MAKE_PROGRAM=$(which ninja) \
-  -DCMAKE_C_COMPILER=/usr/local/lib/android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang \
-  -DCMAKE_CXX_COMPILER=/usr/local/lib/android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang++ \
   -G Ninja
 ninja -j8
 
