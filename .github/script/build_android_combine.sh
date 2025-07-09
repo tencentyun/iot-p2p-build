@@ -39,13 +39,13 @@ mv ../.github/file/libs/armeabi-v7a/libcurl.a  iot/device/android_device/lib/arm
 # 3.编译iot_video_demo.so
 mkdir -p build/android_arm64
 cd build/android_arm64
-cmake ../.. -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/17.2.4988734/build/cmake/android.toolchain.cmake  -DANDROID_TOOLCHAIN_NAME=arm-linux-androideabi-4.9  -DANDROID_NDK=/usr/local/lib/android/sdk/ndk/17.2.4988734  -DCMAKE_BUILD_TYPE=Release  -DANDROID_NATIVE_API_LEVEL=android-9  -DANDROID_ABI=arm64-v8a -DANDROID_TOOLCHAIN=clang
+cmake ../.. -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/18.1.5063045/build/cmake/android.toolchain.cmake  -DANDROID_TOOLCHAIN_NAME=arm-linux-androideabi-4.9  -DANDROID_NDK=/usr/local/lib/android/sdk/ndk/18.1.5063045  -DCMAKE_BUILD_TYPE=Release  -DANDROID_NATIVE_API_LEVEL=android-9  -DANDROID_ABI=arm64-v8a -DANDROID_TOOLCHAIN=clang
 make all -j8
 
 cd ../../
 mkdir -p build/android_armv7
 cd build/android_armv7
-cmake ../.. -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/17.2.4988734/build/cmake/android.toolchain.cmake  -DANDROID_TOOLCHAIN_NAME=arm-linux-androideabi-4.9  -DANDROID_NDK=/usr/local/lib/android/sdk/ndk/17.2.4988734  -DCMAKE_BUILD_TYPE=Release  -DANDROID_NATIVE_API_LEVEL=android-9  -DANDROID_ABI=armeabi-v7a -DANDROID_TOOLCHAIN=clang
+cmake ../.. -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/18.1.5063045/build/cmake/android.toolchain.cmake  -DANDROID_TOOLCHAIN_NAME=arm-linux-androideabi-4.9  -DANDROID_NDK=/usr/local/lib/android/sdk/ndk/18.1.5063045  -DCMAKE_BUILD_TYPE=Release  -DANDROID_NATIVE_API_LEVEL=android-9  -DANDROID_ABI=armeabi-v7a -DANDROID_TOOLCHAIN=clang
 make all -j8
 
 cd ../../
