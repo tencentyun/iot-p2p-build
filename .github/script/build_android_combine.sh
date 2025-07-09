@@ -28,7 +28,7 @@ mv iot/link/app_common/curl_inc/*            iot/device/android_device/samples/i
 mv iot/link/app_common/app_p2p/*             iot/device/android_device/samples/iot_video_demo/app_interface
 mv iot/link/app_common/cloud_api/*           iot/device/android_device/samples/iot_video_demo/app_interface
 mv iot/link/app_common/utils/*               iot/device/android_device/samples/iot_video_demo/app_interface
-rm iot/device/android_device/samples/iot_video_demo/app_interface/utils_hmac.cpp
+#rm iot/device/android_device/samples/iot_video_demo/app_interface/utils_hmac.cpp
 
 # 2.1 更新p2p代码版本
 sed -i "s#.*VIDEOSDKVERSION.*#static const char * VIDEOSDKVERSION = \"$rc\";#g" iot/device/android_device/samples/iot_video_demo/app_interface/appWrapper.h
