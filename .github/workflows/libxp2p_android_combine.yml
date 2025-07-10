@@ -83,7 +83,7 @@ jobs:
       run: |
         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
         export GIT_BRANCH_IMAGE_VERSION=$VERSION
-        bash .github/script/update_version_for_android.sh Release iot-p2p/iot/device/android_device/device_video_aar/explorer-device-video-sdk/build.gradle
+        bash .github/script/update_version_for_android.sh Release iot-p2p/iot/device/android_device/device_video_aar/explorer-app-video-sdk/build.gradle
 
     - name: Update Values of Signing
       run: |
