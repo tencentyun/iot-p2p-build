@@ -55,7 +55,7 @@ jobs:
     - name: Compress xp2p artifacts
       run: |
         mkdir xp2p_artifacts
-        cp -r iot-p2p/iot/device/android_device/device_video_aar/explorer-device-video-sdk/libs/ xp2p_artifacts/
+        cp -r iot-p2p/iot/device/android_device/device_video_aar/explorer-app-video-sdk/libs/ xp2p_artifacts/
         zip -r xp2p_artifacts.zip xp2p_artifacts
     - name: Upload .so to Artifacts
       uses: actions/upload-artifact@v4
@@ -95,4 +95,5 @@ jobs:
       run: |
         chmod -R 777 iot-p2p/iot/device/android_device/device_video_aar/
         cd iot-p2p/iot/device/android_device/device_video_aar/
-        ./gradlew publish
+        ./gradlew publishToMavenCentral
+
