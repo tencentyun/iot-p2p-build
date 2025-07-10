@@ -93,7 +93,7 @@ jobs:
         
     - name: Build with Gradle
       run: |
-        gpg -d --passphrase "$GPG_DECRYPT_PASSPHRASE" --batch --quiet .github/file/secring.gpg.asc > secring.gpg
+        gpg -d --passphrase "$GPG_DECRYPT_PASSPHRASE" --batch --quiet .github/file/secret.gpg.asc > secret.gpg
         chmod -R 777 iot-p2p/iot/device/android_device/device_video_aar/
         cd iot-p2p/iot/device/android_device/device_video_aar/
         ./gradlew build
