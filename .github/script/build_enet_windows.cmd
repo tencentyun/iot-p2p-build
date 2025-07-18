@@ -1,5 +1,11 @@
-set PATH=%PATH%;C:\Program Files (x86)\Windows Kits\10\bin\10.0.22000.0\x86
-dir "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build"
+dir "C:\Program Files\Windows Kits"
+dir "C:\Program Files\Windows Kits\10\bin"
+dir "C:\Program Files (x86)\Windows Kits"
+dir "C:\Program Files (x86)\Windows Kits\10\bin"
+
+
+set PATH=%PATH%;C:\Program Files\Windows Kits\10\bin\10.0.22000.0\x86
+dir "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build"
 set rtt=%2
 
 for /F %%i in ('git rev-parse --short HEAD') do ( set commitid=%%i)
@@ -48,8 +54,8 @@ set sed="C:\Program Files\Git\usr\bin\sed.exe"
 
 %sed% -i "s/.*VIDEOSDKVERSION.*/static const char * VIDEOSDKVERSION = \"%VIDEO_SDK_VERSION%\";/g" ../iot/link/app_common/app_p2p/appWrapper.h
 
-call "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\Tools\VsDevCmd.bat"
-call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat"
+call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
+call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
 cmake -DCMAKE_BUILD_TYPE=Release -DENET_NO_STATIC_BINARY=ON -DWITH_DHT=OFF -DBUILD_WITH_FS=ON -DWITH_ZIP=OFF -DENET_VERSION=lts_1.3  -G"Visual Studio 17 2022" -Tv143 -Ax64 ..
 echo ================end-1======================
 cmake --build . --config Release
