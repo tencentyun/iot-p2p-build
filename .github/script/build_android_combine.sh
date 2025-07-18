@@ -28,7 +28,7 @@ mv iot/link/app_common/curl_inc/*            iot/device/android_device/samples/i
 mv iot/link/app_common/app_p2p/*             iot/device/android_device/samples/iot_video_demo/app_interface
 mv iot/link/app_common/cloud_api/*           iot/device/android_device/samples/iot_video_demo/app_interface
 mv iot/link/app_common/utils/*               iot/device/android_device/samples/iot_video_demo/app_interface
-rm iot/device/android_device/samples/iot_video_demo/app_interface/utils_hmac.cpp
+#rm iot/device/android_device/samples/iot_video_demo/app_interface/utils_hmac.cpp
 
 # 2.1 更新p2p代码版本
 sed -i "s#.*VIDEOSDKVERSION.*#static const char * VIDEOSDKVERSION = \"$rc\";#g" iot/device/android_device/samples/iot_video_demo/app_interface/appWrapper.h
@@ -39,14 +39,26 @@ mv ../.github/file/libs/armeabi-v7a/libcurl.a  iot/device/android_device/lib/arm
 # 3.编译iot_video_demo.so
 mkdir -p build/android_arm64
 cd build/android_arm64
-cmake ../.. -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/16.1.4479499/build/cmake/android.toolchain.cmake  -DANDROID_TOOLCHAIN_NAME=arm-linux-androideabi-4.9  -DANDROID_NDK=/usr/local/lib/android/sdk/ndk/16.1.4479499  -DCMAKE_BUILD_TYPE=Release  -DANDROID_NATIVE_API_LEVEL=android-9  -DANDROID_ABI=arm64-v8a -DANDROID_TOOLCHAIN=clang
-make all -j8
+cmake ../.. \
+  -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/18.1.5063045/build/cmake/android.toolchain.cmake \
+  -DANDROID_NDK=/usr/local/lib/android/sdk/ndk/18.1.5063045 \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DANDROID_NATIVE_API_LEVEL=21 \
+  -DANDROID_ABI=arm64-v8a \
+  -DANDROID_STL=c++_static
+make -j8
 
 cd ../../
 mkdir -p build/android_armv7
 cd build/android_armv7
-cmake ../.. -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/16.1.4479499/build/cmake/android.toolchain.cmake  -DANDROID_TOOLCHAIN_NAME=arm-linux-androideabi-4.9  -DANDROID_NDK=/usr/local/lib/android/sdk/ndk/16.1.4479499  -DCMAKE_BUILD_TYPE=Release  -DANDROID_NATIVE_API_LEVEL=android-9  -DANDROID_ABI=armeabi-v7a -DANDROID_TOOLCHAIN=clang
-make all -j8
+cmake ../.. \
+  -DCMAKE_TOOLCHAIN_FILE=/usr/local/lib/android/sdk/ndk/18.1.5063045/build/cmake/android.toolchain.cmake \
+  -DANDROID_NDK=/usr/local/lib/android/sdk/ndk/18.1.5063045 \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DANDROID_NATIVE_API_LEVEL=21 \
+  -DANDROID_ABI=armeabi-v7a \
+  -DANDROID_STL=c++_static
+make -j8
 
 cd ../../
 mv build/android_arm64/libenet.a                         iot/device/android_device/lib/arm64-v8a
@@ -67,12 +79,13 @@ cd iot/device/android_device
 ls -l output/arm64-v8a/
 ls -l output/armeabi-v7a/
 
-mv output/armeabi-v7a/libiot_video_demo.so   device_video_aar/explorer-device-video-sdk/libs/armeabi-v7a
-mv output/arm64-v8a/libiot_video_demo.so   device_video_aar/explorer-device-video-sdk/libs/arm64-v8a
+#编译app xp2p sdk
+mv output/armeabi-v7a/libiot_video_demo.so   device_video_aar/explorer-app-video-sdk/libs/armeabi-v7a
+mv output/arm64-v8a/libiot_video_demo.so   device_video_aar/explorer-app-video-sdk/libs/arm64-v8a
 
 # 4.构建打包aar所需要的app头文件以及native-lib.cpp文件
-mv ../../link/android_app/java/*.java           device_video_aar/explorer-device-video-sdk/src/main/java/com/tencent/xnet
-mv ../../link/android_app/cpp/native-lib.cpp    device_video_aar/explorer-device-video-sdk/src/main/cpp/app-native-lib.cpp
-sed -i '/\/\/xxxxxxJNI_OnLoad & JNI_OnUnload xxxxxx/, +30d' device_video_aar/explorer-device-video-sdk/src/main/cpp/app-native-lib.cpp
-mv samples/iot_video_demo/app_interface/appWrapper.h   device_video_aar/explorer-device-video-sdk/src/main/cpp
-mv samples/iot_video_demo/app_interface/app_log.h      device_video_aar/explorer-device-video-sdk/src/main/cpp
+#mv ../../link/android_app/java/*.java           device_video_aar/explorer-device-video-sdk/src/main/java/com/tencent/xnet
+#mv ../../link/android_app/cpp/native-lib.cpp    device_video_aar/explorer-device-video-sdk/src/main/cpp/app-native-lib.cpp
+#sed -i '/\/\/xxxxxxJNI_OnLoad & JNI_OnUnload xxxxxx/, +30d' device_video_aar/explorer-device-video-sdk/src/main/cpp/app-native-lib.cpp
+#mv samples/iot_video_demo/app_interface/appWrapper.h   device_video_aar/explorer-device-video-sdk/src/main/cpp
+#mv samples/iot_video_demo/app_interface/app_log.h      device_video_aar/explorer-device-video-sdk/src/main/cpp
