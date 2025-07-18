@@ -1,10 +1,10 @@
-dir "C:\Program Files\Windows Kits"
+dir "C:\Program Files (x86)\Windows Kits\10\bin\10.0.22000.0\x86"
 dir "C:\Program Files\Windows Kits\10\bin"
 dir "C:\Program Files (x86)\Windows Kits"
 dir "C:\Program Files (x86)\Windows Kits\10\bin"
 
 
-set PATH=%PATH%;C:\Program Files\Windows Kits\10\bin\10.0.22000.0\x86
+set PATH=%PATH%;C:\Program Files (x86)\Windows Kits\10\bin\10.0.22000.0\x86
 dir "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build"
 set rtt=%2
 
