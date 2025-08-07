@@ -37,7 +37,7 @@ jobs:
       run: echo +++++$(cmake --version)
 
     - name: Setup NDK
-      run: echo "y" | sudo ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --install "ndk;18.1.5063045"
+      run: echo "y" | sudo ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --install "ndk;25.1.8937393"
 
 
     - name: build libenet debug
