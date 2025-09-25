@@ -43,8 +43,10 @@ echo "-->>$resultvv"
 
 if [ "$1" = "Debug" ]; then
 	sed -i 's#def libVersion.*#def libVersion = \"'$resultvv'-SNAPSHOT\"#g' $2
+	echo "libVersion-->>$resultvv-SNAPSHOT"
 else
-	sed -i 's#def libVersion.*#def libVersion = \"'$vtag'\"#g' $2
+	sed -i 's#def libVersion.*#def libVersion = \":qwq'$vtag'\"#g' $2
+	echo "libVersion-->>$vtag"
 fi
 # ==========此处添加版本自增逻辑，如果是持续集成发snapshot，最新tag+1；如果是发布就发branch
 
