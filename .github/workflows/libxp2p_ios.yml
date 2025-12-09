@@ -18,6 +18,10 @@ jobs:
       uses: jwlawson/actions-setup-cmake@v1.8
       with:
         cmake-version: '3.17.0'
+    - name: List available Xcode versions
+      run: ls /Applications | grep Xcode
+    - name: Select Xcode
+      run: sudo xcode-select -switch /Applications/Xcode_16.app && /usr/bin/xcodebuild -version
     - name: build libenet
       if: startsWith(github.event.ref, 'refs/heads')
       run: |
