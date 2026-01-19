@@ -79,6 +79,10 @@ cd iot/device/android_device
 ls -l output/arm64-v8a/
 ls -l output/armeabi-v7a/
 
+#移动头文件
+mv iot/device/android_device/samples/iot_video_demo/app_interface/appWrapper.h   device_video_aar/explorer-app-video-sdk/src/main/cpp
+mv iot/device/android_device/samples/iot_video_demo/app_interface/app_log.h      device_video_aar/explorer-app-video-sdk/src/main/cpp
+
 #编译app xp2p sdk
 mv output/armeabi-v7a/libiot_video_demo.so   device_video_aar/explorer-app-video-sdk/libs/armeabi-v7a
 mv output/arm64-v8a/libiot_video_demo.so   device_video_aar/explorer-app-video-sdk/libs/arm64-v8a
