@@ -37,7 +37,7 @@ jobs:
       run: echo +++++$(cmake --version)
 
     - name: Setup NDK
-      run: echo "y" | sudo ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --install "ndk;25.1.8937393"
+      run: echo "y" | sudo ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --install "ndk;27.3.13750724"
 
 
     - name: build libenet debug
@@ -96,11 +96,13 @@ jobs:
         gpg -d --passphrase "$GPG_DECRYPT_PASSPHRASE" --batch --quiet .github/file/secret.gpg.asc > secret.gpg
         chmod -R 777 iot-p2p/iot/device/android_device/device_video_aar/
         cd iot-p2p/iot/device/android_device/device_video_aar/
+        ./gradlew clean
+        rm -rf explorer-app-video-sdk/.cxx
         ./gradlew build
     
     - name: Publish aar to Maven
       run: |
-        chmod -R 777 iot-p2p/iot/device/android_device/device_video_aar/
         cd iot-p2p/iot/device/android_device/device_video_aar/
-        ./gradlew publishToMavenCentral -info
+        chmod +x gradlew
+        ./gradlew clean publishToMavenCentral -info
 
