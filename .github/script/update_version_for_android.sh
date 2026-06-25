@@ -20,7 +20,7 @@ branch=${currbra#*v}
 # 判断分支名是否是 vX.Y.x 或 vX.Y.x-fixbug（精确匹配），如果是则走 tag 自增逻辑
 # 其他分支（如 vX.Y.x-log、vX.Y.x-fixbug01 等）使用分支名作为版本号
 if [[ "$branch" =~ ^[0-9]+\.[0-9]+\.x$ ]] || [[ "$branch" =~ ^[0-9]+\.[0-9]+\.x-fixbug$ ]]; then
-    vbranch=${branch%x*}0
+    vbranch=${branch%.x*}0
     echo "vbranch: $vbranch"
 
     function version_ge(){
