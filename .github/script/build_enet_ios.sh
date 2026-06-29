@@ -104,31 +104,16 @@ git commit -m "tencentyun/iot-p2p-build@$rc"
 git push https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-thirdparty-ios.git
 
 # ==========此处添加版本自增逻辑，如果是持续集成发snapshot，最新tag+1；如果是发布就发branch
-vtag=${currtag#*v}
-echo $vtag
+vtag=${currtag#*v}          # v2.4.69 -> 2.4.69
+echo "current tag version: $vtag"
 
+vtaglist=(${vtag//./ })     # 按 . 拆分成数组
+firsttag=${vtaglist[0]}     # 2
+secondtag=${vtaglist[1]}    # 4
+thirdtag=${vtaglist[2]}     # 69
+thirdtag=`expr $thirdtag + 1`   # 70
 
-branch=${currbra#*v}
-vbranch=${branch%x*}0
-echo $vbranch
-
-function version_ge() { test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)" == "$1"; }
-
-resultvv=$vbranch
-if version_ge $vtag $vbranch; then
-    
-    echo "$vtag is greater than or equal to $vbranch"
-    
-    vtaglist=(${vtag//./ })
-    
-    firsttag=${vtaglist[0]}
-    secondtag=${vtaglist[1]}
-    thirdtag=${vtaglist[2]}
-    thirdtag=`expr $thirdtag + 1`
-    
-    resultvv=$firsttag.$secondtag.$thirdtag
-fi
-
+resultvv=$firsttag.$secondtag.$thirdtag   # 2.4.70
 echo "-->>$resultvv"
 
 if [ $1 == 'Debug' ]; then
