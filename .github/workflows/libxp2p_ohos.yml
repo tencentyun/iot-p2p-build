@@ -1,0 +1,72 @@
+name: OHOS XP2P CI
+
+on:
+  push:
+    paths-ignore: # 有时候不想要改个文档也触发 github actions
+      - '**.md'
+      - 'LICENSE'
+
+jobs:
+  build-and-deploy:
+    runs-on: macos-latest
+    env:
+      # 鸿蒙 Native SDK 下载后的解压路径，脚本中通过 DEVECO_SDK 使用
+      OHOS_SDK_VERSION: '4.1.7.5'
+      OHOS_SDK_DIR: ${{ github.workspace }}/ohos-sdk
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Setup cmake
+      uses: jwlawson/actions-setup-cmake@v1.8
+      with:
+        cmake-version: '3.17.0'
+    - name: Use cmake
+      run: echo +++++$(cmake --version)
+
+    # 拉取 iot-p2p 源码（脚本通过 P2P_SRC_DIR 使用）
+    - name: Checkout iot-p2p source
+      uses: actions/checkout@v3
+      with:
+        repository: tencentyun/iot-p2p
+        token: ${{ secrets.IOT_GITHUB_ACCESS_TOKEN }}
+        path: iot-p2p
+        fetch-depth: 0
+
+    # 下载并解压鸿蒙 Native SDK
+    - name: Download OHOS Native SDK
+      run: |
+        mkdir -p "${OHOS_SDK_DIR}"
+        cd "${OHOS_SDK_DIR}"
+        curl -L -o ohos-sdk.zip "https://repo.huaweicloud.com/openharmony/os/${OHOS_SDK_VERSION}/ohos-sdk-mac-public.tar.gz" || true
+        # 如果上面链接不可用，可替换为你 CI 环境中可访问的 OHOS SDK 镜像地址
+        ls -al "${OHOS_SDK_DIR}"
+
+    - name: build libenet for OHOS
+      run: |
+        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+        export GIT_BRANCH_IMAGE_VERSION=$VERSION
+        # 覆盖脚本中默认路径
+        export P2P_SRC_DIR="${GITHUB_WORKSPACE}/iot-p2p"
+        export DEVECO_SDK="${OHOS_SDK_DIR}/native"
+        export DEMO_LIBS_DIR="${GITHUB_WORKSPACE}/xp2p_ohos_artifacts/libs"
+        sh .github/script/build_enet_ohos.sh
+      env:
+        GIT_ACCESS_TOKEN: ${{ secrets.IOT_GITHUB_ACCESS_TOKEN }}
+        PROVISIONING_PASSWORD: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
+
+    - name: Compress xp2p artifacts
+      run: |
+        cd ${GITHUB_WORKSPACE}/xp2p_ohos_artifacts
+        ls -al libs/arm64-v8a || true
+        ls -al libs/armeabi-v7a || true
+        zip -r ${GITHUB_WORKSPACE}/xp2p_ohos.zip libs
+
+    - name: Upload .a to Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: xp2p_ohos
+        path: |
+          xp2p_ohos.zip
