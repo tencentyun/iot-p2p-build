@@ -2,7 +2,7 @@ name: OHOS XP2P CI
 
 on:
   push:
-    paths-ignore: # 有时候不想要改个文档也触发 github actions
+    paths-ignore:
       - '**.md'
       - 'LICENSE'
 
@@ -10,12 +10,10 @@ jobs:
   build-and-deploy:
     runs-on: macos-latest
     env:
-      # 鸿蒙 Native SDK 下载后的解压路径，脚本中通过 DEVECO_SDK 使用
-      OHOS_SDK_VERSION: '4.1.7.5'
       OHOS_SDK_DIR: ${{ github.workspace }}/ohos-sdk
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
       with:
         fetch-depth: 0
 
@@ -26,47 +24,70 @@ jobs:
     - name: Use cmake
       run: echo +++++$(cmake --version)
 
-    # 拉取 iot-p2p 源码（脚本通过 P2P_SRC_DIR 使用）
-    - name: Checkout iot-p2p source
-      uses: actions/checkout@v3
-      with:
-        repository: tencentyun/iot-p2p
-        token: ${{ secrets.IOT_GITHUB_ACCESS_TOKEN }}
-        path: iot-p2p
-        fetch-depth: 0
-
-    # 下载并解压鸿蒙 Native SDK
-    - name: Download OHOS Native SDK
+    - name: Setup OHOS Native SDK
       run: |
+        set -e
         mkdir -p "${OHOS_SDK_DIR}"
         cd "${OHOS_SDK_DIR}"
-        curl -L -o ohos-sdk.zip "https://repo.huaweicloud.com/openharmony/os/${OHOS_SDK_VERSION}/ohos-sdk-mac-public.tar.gz" || true
-        # 如果上面链接不可用，可替换为你 CI 环境中可访问的 OHOS SDK 镜像地址
-        ls -al "${OHOS_SDK_DIR}"
+        # 华为云公开镜像上的 mac 版 OHOS SDK
+        SDK_URL="https://repo.huaweicloud.com/harmonyos/os/4.1-Release/ohos-sdk-mac-public.tar.gz"
+        echo "[INFO] downloading: ${SDK_URL}"
+        curl -fSL -o ohos-sdk.tar.gz "${SDK_URL}"
+        tar -xzf ohos-sdk.tar.gz
+        rm -f ohos-sdk.tar.gz
+        # 解压后 mac 版 native SDK 通常是 ohos-sdk/mac/native-*.zip，再解一次
+        NATIVE_ZIP=$(find "${OHOS_SDK_DIR}" -maxdepth 6 -type f -name 'native-*.zip' | head -n1)
+        if [ -n "${NATIVE_ZIP}" ]; then
+          echo "[INFO] extracting native package: ${NATIVE_ZIP}"
+          unzip -q "${NATIVE_ZIP}" -d "${OHOS_SDK_DIR}/native_tmp"
+        fi
+        # 定位 native/build/cmake/ohos.toolchain.cmake，软链到 ${OHOS_SDK_DIR}/native
+        NATIVE_ROOT=$(find "${OHOS_SDK_DIR}" -type f -path '*/native/build/cmake/ohos.toolchain.cmake' | head -n1 | sed 's|/build/cmake/ohos.toolchain.cmake||')
+        if [ -z "${NATIVE_ROOT}" ]; then
+          echo "[ERR] 未找到 native/build/cmake/ohos.toolchain.cmake"
+          find "${OHOS_SDK_DIR}" -maxdepth 5 -type d
+          exit 1
+        fi
+        if [ "${NATIVE_ROOT}" != "${OHOS_SDK_DIR}/native" ]; then
+          rm -rf "${OHOS_SDK_DIR}/native"
+          ln -s "${NATIVE_ROOT}" "${OHOS_SDK_DIR}/native"
+        fi
+        chmod +x "${OHOS_SDK_DIR}/native/build-tools/cmake/bin/"* 2>/dev/null || true
+        ls -al "${OHOS_SDK_DIR}/native"
 
-    - name: build libenet for OHOS
+    - name: build libenet debug
+      if: startsWith(github.event.ref, 'refs/heads')
       run: |
         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
         export GIT_BRANCH_IMAGE_VERSION=$VERSION
-        # 覆盖脚本中默认路径
-        export P2P_SRC_DIR="${GITHUB_WORKSPACE}/iot-p2p"
         export DEVECO_SDK="${OHOS_SDK_DIR}/native"
-        export DEMO_LIBS_DIR="${GITHUB_WORKSPACE}/xp2p_ohos_artifacts/libs"
-        sh .github/script/build_enet_ohos.sh
+        sh .github/script/build_enet_ohos.sh Debug
+      env:
+        GIT_ACCESS_TOKEN: ${{ secrets.IOT_GITHUB_ACCESS_TOKEN }}
+        PROVISIONING_PASSWORD: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
+
+    - name: build libenet release
+      if: startsWith(github.event.ref, 'refs/tags')
+      run: |
+        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+        export GIT_BRANCH_IMAGE_VERSION=$VERSION
+        export DEVECO_SDK="${OHOS_SDK_DIR}/native"
+        sh .github/script/build_enet_ohos.sh Release
       env:
         GIT_ACCESS_TOKEN: ${{ secrets.IOT_GITHUB_ACCESS_TOKEN }}
         PROVISIONING_PASSWORD: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
 
     - name: Compress xp2p artifacts
       run: |
-        cd ${GITHUB_WORKSPACE}/xp2p_ohos_artifacts
-        ls -al libs/arm64-v8a || true
-        ls -al libs/armeabi-v7a || true
-        zip -r ${GITHUB_WORKSPACE}/xp2p_ohos.zip libs
+        mkdir xp2p_ohos_artifacts
+        cp -r iot-p2p/iot/device/ohos_device/lib xp2p_ohos_artifacts/
+        ls -al xp2p_ohos_artifacts/lib/arm64-v8a || true
+        ls -al xp2p_ohos_artifacts/lib/armeabi-v7a || true
+        zip -r xp2p_ohos_artifacts.zip xp2p_ohos_artifacts
 
     - name: Upload .a to Artifacts
       uses: actions/upload-artifact@v4
       with:
         name: xp2p_ohos
         path: |
-          xp2p_ohos.zip
+          xp2p_ohos_artifacts.zip

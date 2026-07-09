@@ -4,75 +4,87 @@ set -e
 # ==============================================================================
 # 编译 iot-p2p 的 OHOS 静态库（arm64-v8a 与 armeabi-v7a）
 # 产物：libenet.a / libevent*.a / libmbedtls*.a / libminizip.a / libtinyxml2.a
-# 自动拷贝到当前工程 libiotvideo/libs/<arch>/ 供 libiotvideo.so 链接
+# 产物拷贝到：iot-p2p/iot/device/ohos_device/lib/<arch>/
 # ==============================================================================
 
-# ---- 路径配置（支持通过环境变量覆盖，未设置时使用本机默认值）-----------------
-P2P_SRC_DIR="${P2P_SRC_DIR:-/Users/heyu/project/iot-p2p}"
-DEVECO_SDK="${DEVECO_SDK:-/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native}"
-DEMO_LIBS_DIR="${DEMO_LIBS_DIR:-/Users/heyu/DevEcoStudioProjects/iot_video_demo/libiotvideo/libs}"
+rb=$(git rev-parse --abbrev-ref HEAD)
+echo $rb
+echo $GIT_BRANCH_IMAGE_VERSION
 
+# OHOS Native SDK 路径（CI 通过环境变量注入；本地未设置时使用 DevEco Studio 默认路径）
+DEVECO_SDK="${DEVECO_SDK:-/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native}"
 TOOLCHAIN_FILE="${DEVECO_SDK}/build/cmake/ohos.toolchain.cmake"
 export PATH="${DEVECO_SDK}/build-tools/cmake/bin:$PATH"
 
-# ---- 环境校验 ----------------------------------------------------------------
-[ -d "${P2P_SRC_DIR}" ]     || { echo "[ERR] P2P 源码目录不存在: ${P2P_SRC_DIR}"; exit 1; }
-[ -f "${TOOLCHAIN_FILE}" ]  || { echo "[ERR] OHOS 工具链不存在: ${TOOLCHAIN_FILE}"; exit 1; }
-command -v cmake >/dev/null || { echo "[ERR] cmake 未找到，请检查 DevEco SDK 路径"; exit 1; }
+[ -f "${TOOLCHAIN_FILE}" ] || { echo "[ERR] OHOS 工具链不存在: ${TOOLCHAIN_FILE}"; exit 1; }
+command -v cmake >/dev/null || { echo "[ERR] cmake 未找到"; exit 1; }
 
-mkdir -p "${DEMO_LIBS_DIR}/arm64-v8a"
-mkdir -p "${DEMO_LIBS_DIR}/armeabi-v7a"
+# 1.拉取 eNet 支持库
+git clone https://$GIT_ACCESS_TOKEN@github.com/tencentyun/iot-p2p.git
+cd iot-p2p
+if [ "$1" = "Release" ]; then
+    git checkout $GIT_BRANCH_IMAGE_VERSION
+else
+    git checkout $rb
+fi
 
-cd "${P2P_SRC_DIR}"
+# 1.1 获取 p2p 版本号
+VIDEOSDKRC=$(git rev-parse --short HEAD)
+rc=$rb+git.$VIDEOSDKRC
+if [ "$1" = "Release" ]; then
+    rc=$GIT_BRANCH_IMAGE_VERSION+git.$VIDEOSDKRC
+fi
+rc=${rc#*v}
+echo $rc
 
-# ---- 通用编译函数 ------------------------------------------------------------
-# 参数: $1=OHOS_ARCH   $2=build 子目录名   $3=目标 libs 目录
-build_one_arch() {
-    OHOS_ARCH="$1"
-    BUILD_DIR="build/$2"
-    DEST_DIR="$3"
+# 2.准备产物目录
+mkdir -p iot/device/ohos_device/lib/arm64-v8a
+mkdir -p iot/device/ohos_device/lib/armeabi-v7a
 
-    echo ""
-    echo "=============================================================="
-    echo "[BUILD] arch=${OHOS_ARCH}  build_dir=${BUILD_DIR}"
-    echo "=============================================================="
+# 3.编译 arm64-v8a
+mkdir -p build/ohos_arm64
+cd build/ohos_arm64
+cmake ../.. \
+    -DCMAKE_TOOLCHAIN_FILE="${TOOLCHAIN_FILE}" \
+    -DOHOS_PLATFORM=OHOS \
+    -DOHOS_STL=c++_static \
+    -DOHOS_ARCH=arm64-v8a \
+    -DCMAKE_SYSTEM_NAME=OHOS \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DENET_SELF_SIGN=ON \
+    -DENET_VERSION=v1.0.0 \
+    -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3
+make -j8
 
-    rm -rf "${BUILD_DIR}"
-    mkdir -p "${BUILD_DIR}"
-    (
-        cd "${BUILD_DIR}"
-        cmake "${P2P_SRC_DIR}" \
-            -DCMAKE_TOOLCHAIN_FILE="${TOOLCHAIN_FILE}" \
-            -DOHOS_PLATFORM=OHOS \
-            -DOHOS_STL=c++_static \
-            -DOHOS_ARCH="${OHOS_ARCH}" \
-            -DCMAKE_SYSTEM_NAME=OHOS \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DENET_SELF_SIGN=ON \
-            -DENET_VERSION=v1.0.0 \
-            -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3
-        make all -j8
-    )
+cd ../../
+# 4.编译 armeabi-v7a
+mkdir -p build/ohos_armv7
+cd build/ohos_armv7
+cmake ../.. \
+    -DCMAKE_TOOLCHAIN_FILE="${TOOLCHAIN_FILE}" \
+    -DOHOS_PLATFORM=OHOS \
+    -DOHOS_STL=c++_static \
+    -DOHOS_ARCH=armeabi-v7a \
+    -DCMAKE_SYSTEM_NAME=OHOS \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DENET_SELF_SIGN=ON \
+    -DENET_VERSION=v1.0.0 \
+    -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3
+make -j8
 
-    echo "[COPY] -> ${DEST_DIR}"
-    # 主库
-    cp -f "${BUILD_DIR}"/libenet.a                             "${DEST_DIR}/"
-    # 第三方依赖（FetchContent 编出来的）
-    cp -f "${BUILD_DIR}"/_deps/libevent-build/*.a              "${DEST_DIR}/" 2>/dev/null || true
-    cp -f "${BUILD_DIR}"/_deps/mbedtls-build/library/*.a       "${DEST_DIR}/" 2>/dev/null || true
-    cp -f "${BUILD_DIR}"/_deps/minizip-build/*.a               "${DEST_DIR}/" 2>/dev/null || true
-    cp -f "${BUILD_DIR}"/_deps/tinyxml2-build/*.a              "${DEST_DIR}/" 2>/dev/null || true
-}
+cd ../../
+# 5.汇总产物到 iot/device/ohos_device/lib/<arch>/
+mv build/ohos_arm64/libenet.a                         iot/device/ohos_device/lib/arm64-v8a
+mv build/ohos_arm64/_deps/libevent-build/*.a          iot/device/ohos_device/lib/arm64-v8a 2>/dev/null || true
+mv build/ohos_arm64/_deps/mbedtls-build/library/*.a   iot/device/ohos_device/lib/arm64-v8a 2>/dev/null || true
+mv build/ohos_arm64/_deps/minizip-build/*.a           iot/device/ohos_device/lib/arm64-v8a 2>/dev/null || true
+mv build/ohos_arm64/_deps/tinyxml2-build/*.a          iot/device/ohos_device/lib/arm64-v8a 2>/dev/null || true
 
-# ---- 依次编两个架构 ----------------------------------------------------------
-build_one_arch "arm64-v8a"    "ohos_arm64" "${DEMO_LIBS_DIR}/arm64-v8a"
-build_one_arch "armeabi-v7a"  "ohos_armv7" "${DEMO_LIBS_DIR}/armeabi-v7a"
+mv build/ohos_armv7/libenet.a                         iot/device/ohos_device/lib/armeabi-v7a
+mv build/ohos_armv7/_deps/libevent-build/*.a          iot/device/ohos_device/lib/armeabi-v7a 2>/dev/null || true
+mv build/ohos_armv7/_deps/mbedtls-build/library/*.a   iot/device/ohos_device/lib/armeabi-v7a 2>/dev/null || true
+mv build/ohos_armv7/_deps/minizip-build/*.a           iot/device/ohos_device/lib/armeabi-v7a 2>/dev/null || true
+mv build/ohos_armv7/_deps/tinyxml2-build/*.a          iot/device/ohos_device/lib/armeabi-v7a 2>/dev/null || true
 
-echo ""
-echo "=============================================================="
-echo "[DONE] 全部编译完成，产物已拷贝到:"
-echo "  ${DEMO_LIBS_DIR}/arm64-v8a"
-echo "  ${DEMO_LIBS_DIR}/armeabi-v7a"
-echo "=============================================================="
-ls -1 "${DEMO_LIBS_DIR}/arm64-v8a"    | sed 's/^/  arm64-v8a  : /'
-ls -1 "${DEMO_LIBS_DIR}/armeabi-v7a"  | sed 's/^/  armeabi-v7a: /'
+ls -l iot/device/ohos_device/lib/arm64-v8a/
+ls -l iot/device/ohos_device/lib/armeabi-v7a/
