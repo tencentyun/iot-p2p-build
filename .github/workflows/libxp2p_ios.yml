@@ -21,7 +21,7 @@ jobs:
     - name: List available Xcode versions
       run: ls /Applications | grep Xcode
     - name: Select Xcode
-      run: sudo xcode-select -switch /Applications/Xcode_16.app && /usr/bin/xcodebuild -version && /usr/bin/xcodebuild -showsdks | grep iphoneos
+      run: sudo xcode-select -switch /Applications/Xcode.app && /usr/bin/xcodebuild -version && /usr/bin/xcodebuild -showsdks | grep iphoneos
     - name: build libenet
       if: startsWith(github.event.ref, 'refs/heads')
       run: |
