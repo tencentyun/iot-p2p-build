@@ -1,0 +1,114 @@
+name: Linux XP2P CI (Ubuntu 20.04 Compatible)
+
+# 说明：
+# 此 workflow 与原 libxp2p_linux.yml 并行存在，不影响原有构建流程。
+# 通过 GitHub Actions 的 container 特性，在 ubuntu:20.04 Docker 容器内完成编译，
+# 使得产物的 glibc 依赖 <= 2.31，可兼容 Ubuntu 20.04 / 22.04 / 24.04。
+#
+# 触发条件：仅在推送 tag 或推送 u2004 相关分支时触发，避免所有分支都跑双份 CI。
+# 如需在每次 push 都构建，可自行放开 branches 过滤。
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE'
+  workflow_dispatch:  # 支持手动触发
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-24.04
+    container:
+      image: ubuntu:20.04
+      env:
+        DEBIAN_FRONTEND: noninteractive
+        TZ: Asia/Shanghai
+
+    steps:
+    - name: Install build dependencies
+      # 官方 ubuntu:20.04 镜像很干净，需要手动安装编译工具链
+      run: |
+        apt-get update
+        apt-get install -y --no-install-recommends \
+          build-essential \
+          git \
+          curl \
+          wget \
+          ca-certificates \
+          gnupg \
+          zip \
+          unzip \
+          perl \
+          pkg-config \
+          libssl-dev \
+          binutils \
+          file \
+          software-properties-common
+        # Ubuntu 20.04 apt 自带 cmake 3.16，低于脚本要求的 3.17，从 Kitware 源安装新版
+        wget -qO- https://apt.kitware.com/keys/kitware-archive-latest.asc \
+          | gpg --dearmor - \
+          | tee /usr/share/keyrings/kitware-archive-keyring.gpg > /dev/null
+        echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal main' \
+          | tee /etc/apt/sources.list.d/kitware.list > /dev/null
+        apt-get update
+        apt-get install -y cmake
+
+    - name: Configure git safe directory
+      # 容器内是 root 用户，跨 UID 访问工作区会触发 dubious ownership 报错
+      run: git config --global --add safe.directory '*'
+
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Print build environment
+      run: |
+        echo "=== glibc ==="
+        ldd --version
+        echo "=== gcc ==="
+        gcc --version
+        echo "=== cmake ==="
+        cmake --version
+
+    - name: build libenet
+      if: startsWith(github.event.ref, 'refs/heads')
+      run: |
+        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+        export GIT_BRANCH_IMAGE_VERSION=$VERSION
+        sh .github/script/build_enet_linux_u2004.sh Debug
+      env:
+        GIT_ACCESS_TOKEN: ${{ secrets.IOT_GITHUB_ACCESS_TOKEN }}
+        PROVISIONING_PASSWORD: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
+
+    - name: push libenet
+      if: startsWith(github.event.ref, 'refs/tags')
+      run: |
+        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+        export GIT_BRANCH_IMAGE_VERSION=$VERSION
+        sh .github/script/build_enet_linux_u2004.sh Release
+      env:
+        GIT_ACCESS_TOKEN: ${{ secrets.IOT_GITHUB_ACCESS_TOKEN }}
+        PROVISIONING_PASSWORD: ${{ secrets.GPG_DECRYPT_PASSPHRASE }}
+
+    - name: Compress SDK Artifacts
+      # 产物文件名带 _u2004 后缀，避免与原 workflow 的 xp2p_linux.zip 冲突
+      run: |
+        zip -r xp2p_linux_u2004.zip iot-p2p/iot/link/pc_app/p2p_sample
+
+    - name: Upload LinuxSDK Library (u2004)
+      if: startsWith(github.event.ref, 'refs/heads')
+      uses: actions/upload-artifact@v4
+      with:
+        name: xp2p_linux_u2004_lib.zip
+        path: xp2p_linux_u2004.zip
+
+    - name: Upload binaries to release (u2004)
+      if: startsWith(github.event.ref, 'refs/tags')
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: xp2p_linux_u2004.zip
+        asset_name: xp2p_linux_u2004.zip
+        tag: ${{ github.ref }}
+        overwrite: true
