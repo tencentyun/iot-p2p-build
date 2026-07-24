@@ -44,14 +44,18 @@ jobs:
           binutils \
           file \
           software-properties-common
-        # Ubuntu 20.04 apt 自带 cmake 3.16，低于脚本要求的 3.17，从 Kitware 源安装新版
-        wget -qO- https://apt.kitware.com/keys/kitware-archive-latest.asc \
-          | gpg --dearmor - \
-          | tee /usr/share/keyrings/kitware-archive-keyring.gpg > /dev/null
-        echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal main' \
-          | tee /etc/apt/sources.list.d/kitware.list > /dev/null
-        apt-get update
-        apt-get install -y cmake
+        # 安装指定版本的 cmake 3.17.5：
+        # - Ubuntu 20.04 apt 自带 cmake 3.16，低于脚本 CMakeLists 要求的 3.17
+        # - Kitware 源虽然更方便，但默认拉到 cmake 4.x，会因 "Compatibility with
+        #   CMake < 3.5 has been removed" 导致 iot-p2p 引用的 zlib 子项目配置失败
+        # - 因此直接从 GitHub CMake Release 下载官方预编译 tar.gz 到 /usr/local，
+        #   版本与原 libxp2p_linux.yml 中 jwlawson/actions-setup-cmake@v1.8 的
+        #   cmake-version: '3.17.0' 对齐（选择 3.17 系列末尾稳定版 3.17.5）
+        CMAKE_VERSION=3.17.5
+        wget -q "https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-Linux-x86_64.tar.gz" -O /tmp/cmake.tar.gz
+        tar -xzf /tmp/cmake.tar.gz -C /usr/local --strip-components=1
+        rm -f /tmp/cmake.tar.gz
+        cmake --version
 
     - name: Configure git safe directory
       # 容器内是 root 用户，跨 UID 访问工作区会触发 dubious ownership 报错
