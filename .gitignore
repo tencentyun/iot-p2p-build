@@ -16,3 +16,4 @@ iot-p2p/
 CMakeLists*
 #build_*.sh
 iot_build*.sh
+.codebuddy/
