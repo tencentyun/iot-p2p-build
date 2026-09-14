@@ -63,8 +63,7 @@ cmake ../.. -GXcode -DCMAKE_INSTALL_PREFIX=$PWD/INSTALL -DENET_SELF_SIGN=ON -DCM
 
 
 # build lib
-# xcodebuild build -project eNet.xcodeproj -scheme enet_static -configuration Release -sdk iphoneos -destination "generic/platform=iOS" -derivedDataPath ./build
-xcodebuild build -project eNet.xcodeproj -scheme enet_static -configuration Release -sdk iphoneos -derivedDataPath ./build
+xcodebuild build -project eNet.xcodeproj -scheme enet_static -configuration Release -sdk iphoneos -destination "generic/platform=iOS" -derivedDataPath ./build
 #strip -x -S Release-iphoneos/libenet.a -o  Release-iphoneos/libenet_.a
 #lipo -info Release-iphoneos/libenet.a
 
@@ -79,7 +78,7 @@ cp _deps/mbedtls-build/library/Release-iphoneos/libmbed*.a   ../../../.github/fi
 cp _deps/minizip-build/Release-iphoneos/libminizip.a   ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/
 cp ../../../.github/file/libcurl.a  ../../../.github/file/xp2p_c_demo/xp2p_c_demo/XP2P-iOS/
 
-xcodebuild build -project ../../../.github/file/xp2p_c_demo/xp2p_c_demo.xcodeproj -scheme xp2p_c_demo -configuration Release -sdk iphoneos -derivedDataPath ./build
+xcodebuild build -project ../../../.github/file/xp2p_c_demo/xp2p_c_demo.xcodeproj -scheme xp2p_c_demo -configuration Release -sdk iphoneos -destination "generic/platform=iOS" -derivedDataPath ./build
 echo "CCCCCCCCCCCCCCC"
 
 
