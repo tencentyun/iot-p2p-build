@@ -63,8 +63,9 @@ jobs:
         
         
     - name: Compress SDK Artifacts
+      shell: pwsh
       run: |
-        tar.exe -c -a -f xp2p_windows.zip -C iot-p2p/iot/link/pc_app p2p_sample
+        Compress-Archive -Path "iot-p2p/iot/link/pc_app/p2p_sample" -DestinationPath "xp2p_windows.zip" -Force
         
     - name: Upload Windows SDK Library
       if: startsWith(github.event.ref, 'refs/heads')
